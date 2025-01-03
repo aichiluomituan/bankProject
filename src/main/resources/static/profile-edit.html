@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改个人信息 - 银行管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .profile-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .account-number {
+            font-size: 24px;
+            color: #1e88e5;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
+        }
+
+        .form-group .hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .save-button {
+            background-color: #1e88e5;
+            color: white;
+        }
+
+        .save-button:hover {
+            background-color: #1565c0;
+        }
+
+        .cancel-button {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .cancel-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 10px;
+            }
+
+            .profile-form {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>修改个人信息</h1>
+    </div>
+    <div class="profile-form">
+        <div id="successMessage" class="success-message">
+            修改成功！
+        </div>
+
+        <!-- 显示账号（username）的位置 -->
+        <div class="account-section">
+            <div class="account-number" id="usernameDisplay"></div>
+            <div class="hint">当前账号</div>
+        </div>
+
+        <form id="profileForm">
+            <div class="form-group">
+                <label for="password">账号</label>
+                <input type="text" id="username" >
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" >
+            </div>
+
+            <div class="form-group">
+                <label for="phone">手机号码</label>
+                <input type="tel" id="phone"  pattern="^1[3-9]\d{9}$">
+                <div class="error-message" id="phoneError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">电子邮箱</label>
+                <input type="email" id="email" >
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">联系地址</label>
+                <input type="text" id="address">
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="button cancel-button" onclick="window.location.href='index.html'">取消</button>
+                <button type="submit" class="button save-button">保存修改</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
+<script src="../static/js/axios.min.js"></script>
+<script>
+    // 配置axios
+    axios.defaults.baseURL = 'http://localhost:8080';
+
+    // 添加失焦事件监听
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+
+        phoneInput.addEventListener('blur', function() {
+            validateField('phone');
+        });
+
+        emailInput.addEventListener('blur', function() {
+            validateField('email');
+        });
+    });
+    // 单个字段验证
+    function validateField(fieldName) {
+        const value = document.getElementById(fieldName).value.trim();
+        const errorElement = document.getElementById(fieldName + 'Error');
+
+        // 如果没有输入，不进行验证
+        if (!value) {
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // 有输入值时进行验证
+        switch(fieldName) {
+            case 'phone':
+                const phoneRegex = /^1[3-9]\d{9}$/;
+                if (!phoneRegex.test(value)) {
+                    errorElement.textContent = '请输入有效的手机号码';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                break;
+
+            case 'email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    errorElement.textContent = '请输入有效的邮箱地址';
+                    errorElement.style.display = 'block';
+                    return false;
+                }
+                break;
+        }
+
+        errorElement.style.display = 'none';
+        return true;
+    }
+
+    // 表单提交时的验证
+    function validateForm() {
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        let isValid = true;
+
+        // 只有当有值时才进行验证
+        if (phone) {
+            isValid = validateField('phone') && isValid;
+        }
+
+        if (email) {
+            isValid = validateField('email') && isValid;
+        }
+
+        return isValid;
+    }
+
+    async function loadUserInfo() {
+        try {
+            const username = localStorage.getItem('username');
+            console.log('从localStorage获取的username:', username); // 检查username是否正确获取
+
+            if (!username) {
+                alert('请先登录');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            console.log('准备发送请求到:', `/user/getUserInfo?username=${username}`);
+            const response = await axios.get(`/user/getUserInfo?username=${username}`);
+            console.log('收到响应:', response); // 检查响应内容
+
+            if (response.data.code === 200) {
+                const userData = response.data.data;
+                console.log('用户数据:', userData);
+
+                // 显示账号（username）
+                document.getElementById('usernameDisplay').textContent = userData.username;
+
+            } else {
+                console.error('获取用户信息失败:', response.data);
+                alert('获取用户信息失败：' + response.data.msg);
+            }
+        } catch (error) {
+            console.error('完整错误信息:', error);
+            console.error('错误响应:', error.response); // 添加这行来查看详细错误信息
+            alert('加载用户信息失败，请检查网络连接');
+        }
+    }
+
+    // 保存个人信息
+    async function saveProfile(event) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
+        try {
+            const currentUsername = localStorage.getItem('username');
+            const formData = {
+                currentUsername: currentUsername, // 添加当前用户名
+                username: document.getElementById('username').value.trim(),
+                password: document.getElementById('password').value,
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                address: document.getElementById('address').value.trim()
+            };
+
+            console.log('准备发送的数据:', formData);
+
+            const response = await axios.post('/user/updateUserInfo', formData);
+
+            if (response.data.code === 200) {
+                // 检查用户名是否被修改（只有当新用户名不为空时才判断）
+                const usernameChanged = formData.username && formData.username.trim() !== '' &&
+                    currentUsername !== formData.username;
+
+                // 检查密码是否被修改（只在输入了新密码时判断）
+                const passwordChanged = formData.password && formData.password.trim() !== '';
+
+                if (usernameChanged || passwordChanged) {
+                    // 用户名或密码被修改，需要重新登录
+                    alert('修改成功！请重新登录');
+                    localStorage.clear();
+                    console.log('用户名或密码已修改，准备跳转到登录页面');
+                    window.location.href = 'login.html';
+                } else {
+                    // 只修改了其他信息（手机号、邮箱、地址），不需要重新登录
+                    alert('修改成功！');
+                    console.log('基本信息修改成功，返回首页');
+                    window.location.href = 'index.html';
+                }
+            } else {
+                alert(response.data.msg || '更新失败');
+            }
+        } catch (error) {
+            console.error('更新失败:', error);
+            alert(error.response?.data?.msg || '更新失败');
+        }
+    }
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUserInfo();
+        document.getElementById('profileForm').onsubmit = saveProfile;
+    });
+</script>

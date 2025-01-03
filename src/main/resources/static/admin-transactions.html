@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交易监控 - 银行管理系统</title>
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+<!-- 交易监控内容 -->
+<div id="transactions-content">
+    <div class="header">
+        <h2>交易监控</h2>
+        <div class="search-bar">
+            <input type="text" placeholder="搜索交易...">
+            <button class="button">搜索</button>
+        </div>
+    </div>
+
+    <!-- 交易统计卡片 -->
+    <div class="dashboard-grid">
+        <div class="stat-card">
+            <h3>今日交易总额</h3>
+            <div class="stat-number">¥1,567,890</div>
+            <p>较昨日 <span style="color: #4caf50;">+12%</span></p>
+        </div>
+        <div class="stat-card">
+            <h3>交易笔数</h3>
+            <div class="stat-number">3,456</div>
+            <p>较昨日 <span style="color: #4caf50;">+8%</span></p>
+        </div>
+        <div class="stat-card">
+            <h3>异常交易</h3>
+            <div class="stat-number" style="color: #f44336;">23</div>
+            <p>需要处理</p>
+        </div>
+    </div>
+
+    <!-- 交易筛选 -->
+    <div class="filter-section" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px;">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div>
+                <label>交易类型：</label>
+                <select style="padding: 5px;">
+                    <option value="all">全部</option>
+                    <option value="transfer">转账</option>
+                    <option value="deposit">存款</option>
+                    <option value="withdraw">取款</option>
+                </select>
+            </div>
+            <div>
+                <label>交易状态：</label>
+                <select style="padding: 5px;">
+                    <option value="all">全部</option>
+                    <option value="success">成功</option>
+                    <option value="pending">处理中</option>
+                    <option value="failed">失败</option>
+                    <option value="suspicious">可疑</option>
+                </select>
+            </div>
+            <div>
+                <label>交易时间：</label>
+                <input type="date" style="padding: 5px;">
+                <span>至</span>
+                <input type="date" style="padding: 5px;">
+            </div>
+            <div>
+                <label>金额范围：</label>
+                <input type="number" placeholder="最小金额" style="width: 100px; padding: 5px;">
+                <span>至</span>
+                <input type="number" placeholder="最大金额" style="width: 100px; padding: 5px;">
+            </div>
+            <button class="button" style="height: 30px;">筛选</button>
+        </div>
+    </div>
+
+    <!-- 交易列表 -->
+    <div class="data-table">
+        <table>
+            <thead>
+            <tr>
+                <th>交易编号</th>
+                <th>交易时间</th>
+                <th>交易类型</th>
+                <th>付款方</th>
+                <th>收款方</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>TX20240120001</td>
+                <td>2024-01-20 14:30:25</td>
+                <td>转账</td>
+                <td>张三 (6225****8888)</td>
+                <td>李四 (6225****9999)</td>
+                <td>¥5,000.00</td>
+                <td><span class="status-badge status-active">成功</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">
+                            详情
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>TX20240120002</td>
+                <td>2024-01-20 15:45:12</td>
+                <td>取款</td>
+                <td>王五 (6225****7777)</td>
+                <td>-</td>
+                <td>¥10,000.00</td>
+                <td><span class="status-badge" style="background-color: #fff3e0; color: #ff9800;">处理中</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">
+                            详情
+                        </button>
+                        <button class="action-button" style="background-color: #e8f5e9; color: #4caf50;">
+                            审核
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>TX20240120003</td>
+                <td>2024-01-20 16:20:45</td>
+                <td>转账</td>
+                <td>赵六 (6225****6666)</td>
+                <td>钱七 (6225****5555)</td>
+                <td>¥50,000.00</td>
+                <td><span class="status-badge" style="background-color: #ffebee; color: #f44336;">可疑</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">
+                            详情
+                        </button>
+                        <button class="action-button delete-button">
+                            冻结
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 分页控件 -->
+        <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+            <button class="button" style="background-color: #f5f5f5; color: #333;">上一页</button>
+            <button class="button" style="background-color: #1e88e5;">1</button>
+            <button class="button" style="background-color: #f5f5f5; color: #333;">2</button>
+            <button class="button" style="background-color: #f5f5f5; color: #333;">3</button>
+            <button class="button" style="background-color: #f5f5f5; color: #333;">下一页</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

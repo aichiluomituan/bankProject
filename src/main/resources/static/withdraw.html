@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提现 - 银行管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .withdraw-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .balance-info {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .amount-option {
+            padding: 10px;
+            border: 1px solid #1e88e5;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .amount-option:hover {
+            background-color: #e3f2fd;
+        }
+
+        .amount-option.selected {
+            background-color: #1e88e5;
+            color: white;
+        }
+
+        .button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #1565c0;
+        }
+
+        .back-button {
+            background-color: #757575;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #616161;
+        }
+
+        .warning {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>账户提现</h1>
+    </div>
+    <div class="withdraw-form">
+        <div class="balance-info">
+            <h3>当前可用余额：¥100,000.00</h3>
+            <p>单笔提现限额：¥50,000.00</p>
+        </div>
+
+        <div class="form-group">
+            <label>提现账户</label>
+<!--            readonly-->
+            <input type="text" id="withdraw">
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label>提现到</label>-->
+<!--            <select class="form-control" style="width: 100%; padding: 10px; margin-bottom: 10px;">-->
+<!--                <option value="1">工商银行 (尾号3344)</option>-->
+<!--                <option value="2">建设银行 (尾号5566)</option>-->
+<!--                <option value="3">农业银行 (尾号7788)</option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+        <div class="form-group">
+            <label>提现金额</label>
+            <div class="amount-options">
+                <div class="amount-option" data-amount="100">¥100</div>
+                <div class="amount-option" data-amount="500">¥500</div>
+                <div class="amount-option" data-amount="1000">¥1000</div>
+                <div class="amount-option" data-amount="2000">¥2000</div>
+                <div class="amount-option" data-amount="5000">¥5000</div>
+                <div class="amount-option" data-amount="10000">¥10000</div>
+            </div>
+            <input type="number" id="customAmount" placeholder="输入其他金额">
+            <p class="warning">注：提现金额必须为整数，最低100元</p>
+        </div>
+
+        <div class="form-group">
+            <label>支付密码</label>
+            <input type="password" placeholder="请输入支付密码" id="password">
+        </div>
+
+        <button class="button" onclick="handleWithdraw()">确认提现</button>
+        <button class="button back-button" onclick="window.location.href='index.html'">返回首页</button>
+    </div>
+</div>
+<script src="js/axios.min.js"></script>
+<script>
+    // 选择金额选项
+    let amountOptions = document.querySelectorAll('.amount-option');
+    let customAmountInput = document.getElementById('customAmount');
+    let withdraw = document.getElementById('withdraw');
+    let password = document.getElementById('password');
+    amountOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // 移除其他选项的选中状态
+            amountOptions.forEach(opt => opt.classList.remove('selected'));
+            // 添加当前选项的选中状态
+            option.classList.add('selected');
+            // 设置输入框的值
+            customAmountInput.value = option.dataset.amount;
+        });
+    });
+
+    // 处理提现
+    function handleWithdraw() {
+            const amount = Number(customAmountInput.value);
+            const bankCard = withdraw.value;        // 获取银行卡号
+            const tradePwd = password.value;        // 获取密码值
+            // 添加密码验证
+            if (!tradePwd) {
+            alert('请输入支付密码！');
+            return;
+            }
+            // 验证提现金额
+            if (!amount || amount < 100) {
+                alert('提现金额必须大于等于100元！');
+                return;
+            }
+
+            if (amount > 50000) {
+                alert('超出单笔提现限额！');
+                return;
+            }
+
+            if (amount > 100000) {
+                alert('超出可用余额！');
+                return;
+            }
+
+            // 验证金额是否为整数
+            if (amount % 1 !== 0) {
+                alert('提现金额必须为整数！');
+                return;
+            }
+
+            // 这里添加实际的提现处理逻辑
+            alert(`确认提现 ¥${amount} 元`);
+            // 提现成功后可以跳转回首页
+            // window.location.href = 'index.html';
+            axios({
+                url: 'http://localhost:8080/money/withdraw',
+                method: 'post',
+                data: {
+                    bank_card: bankCard,
+                    bank_balance: amount,
+                    trade_pwd: tradePwd    // 使用获取到的密码值
+                }
+            }).then((result) => {
+                if(result.data.code == '200'){
+                    alert("提现成功");
+                    window.location.href = 'index.html';
+                } else if(result.data.code == '404' && result.data.msg.includes("密码错误")) {
+                    alert("支付密码错误，请重试");
+                    password.value = ''; // 清空密码输入框
+                } else {
+                    alert("提现失败：" + (result.data.msg || '未知错误'));
+                }
+            }).catch(error => {
+                console.error('提现错误详情:', error);
+                alert("提现请求失败：" + (error.response?.data?.msg || error.message || '未知错误'));
+            });
+    }
+</script>
+</body>
+</html>

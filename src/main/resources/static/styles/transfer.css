@@ -1,0 +1,35 @@
+/* 转账页面样式 */
+.transfer-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.amount-input {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.recent-transfers {
+    margin-top: 30px;
+}
+
+.amount-plus {
+    color: #2e7d32;
+}
+
+.amount-minus {
+    color: #c62828;
+}
+
+.transfer-summary {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.transfer-summary div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}

@@ -1,0 +1,35 @@
+/* 交易记录页面样式 */
+.filter-section {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.date-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.type-filter select {
+    min-width: 150px;
+}
+
+.transactions-list {
+    overflow-x: auto;
+}
+
+.amount-plus {
+    color: #2e7d32;
+}
+
+.amount-minus {
+    color: #c62828;
+}
+
+.transaction-detail {
+    font-size: 13px;
+    color: #666;
+}

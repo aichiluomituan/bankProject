@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>银行系统 - 注册</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>用户注册</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>用户名：</label>
+                <input type="text" required placeholder="请输入用户名">
+            </div>
+            <div class="form-group">
+                <label>手机号码：</label>
+                <input type="tel" required placeholder="请输入手机号码">
+            </div>
+            <div class="form-group">
+                <label>设置密码：</label>
+                <input type="password" required placeholder="请设置登录密码">
+            </div>
+            <div class="form-group">
+                <label>确认密码：</label>
+                <input type="password" required placeholder="请再次输入密码">
+            </div>
+            <div class="form-group verification">
+                <label>验证码：</label>
+                <div class="verify-input">
+                    <input type="text" required placeholder="请输入验证码">
+                    <button type="button" class="verify-btn">获取验证码</button>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">注册</button>
+        </form>
+        <div class="switch-form">
+            <a href="login.html">已有账号？立即登录</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

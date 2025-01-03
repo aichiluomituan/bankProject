@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值 - 银行管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .recharge-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .amount-option {
+            padding: 10px;
+            border: 1px solid #1e88e5;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .amount-option:hover {
+            background-color: #e3f2fd;
+        }
+
+        .amount-option.selected {
+            background-color: #1e88e5;
+            color: white;
+        }
+
+        .button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #1565c0;
+        }
+
+        .back-button {
+            background-color: #757575;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #616161;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>账户充值</h1>
+    </div>
+    <div class="recharge-form">
+        <div class="form-group">
+            <label>账户号码</label>
+            <input type="text" id="bankcard">
+        </div>
+        <div class="form-group">
+            <label>充值金额</label>
+            <div class="amount-options">
+                <div class="amount-option" data-amount="100">¥100</div>
+                <div class="amount-option" data-amount="200">¥200</div>
+                <div class="amount-option" data-amount="500">¥500</div>
+                <div class="amount-option" data-amount="1000">¥1000</div>
+                <div class="amount-option" data-amount="2000">¥2000</div>
+                <div class="amount-option" data-amount="5000">¥5000</div>
+            </div>
+            <input type="number" id="customAmount" placeholder="输入其他金额">
+        </div>
+        <button class="button" onclick="handleRecharge()">确认充值</button>
+        <button class="button back-button" onclick="window.location.href='index.html'">返回首页</button>
+    </div>
+</div>
+<script src="js/axios.min.js"></script>
+<script>
+    // 选择金额选项
+    const amountOptions = document.querySelectorAll('.amount-option');
+    const customAmountInput = document.getElementById('customAmount');
+
+    amountOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // 移除其他选项的选中状态
+            amountOptions.forEach(opt => opt.classList.remove('selected'));
+            // 添加当前选项的选中状态
+            option.classList.add('selected');
+            // 设置输入框的值
+            customAmountInput.value = option.dataset.amount;
+        });
+    });
+
+    // 处理充值
+    function handleRecharge() {
+        const amount = customAmountInput.value;
+        if (!amount || amount <= 0) {
+            alert('请输入有效的充值金额！');
+            return;
+        }
+
+        // 这里添加实际的充值处理逻辑
+        alert(`确认充值 ¥${amount} 元`);
+        // 充值成功后可以跳转回首页
+        // window.location.href = 'index.html';
+        axios({
+            url: 'http://localhost:8080/money/Recharge',
+            method: 'post',
+            data: {
+                bank_card: document.getElementById("bankcard").value,
+                bank_balance: amount
+            }
+        }).then((result) => {
+            console.log('服务器响应:', result.data);  // 打印完整响应
+            if(result.data.code == '200'){
+                alert("充值成功");
+                window.location.href = 'index.html';
+            } else {
+                alert("充值失败：" + (result.data.msg || '未知错误'));
+            }
+        }).catch(error => {
+            console.error('充值错误详情:', error);
+            alert("充值请求失败：" + (error.response?.data?.msg || error.message || '未知错误'));
+        });
+
+        console.log('充值请求参数:', {
+            bank_card: bankCard,
+            balance: amount
+        });
+    }
+</script>
+</body>
+</html>
+

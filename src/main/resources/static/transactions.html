@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>交易记录</title>
+    <!-- 在每个页面的 <head> 标签中添加以下内容 -->
+    <link rel="stylesheet" href="styles/common.css">
+</head>
+<body>
+<link rel="stylesheet" href="styles/transactions.css"> <!-- 交易记录页面 -->
+<div class="container">
+    <div class="filter-section card">
+        <div class="date-filter">
+            <input type="date" id="startDate">
+            <span>至</span>
+            <input type="date" id="endDate">
+        </div>
+        <div class="type-filter">
+            <select>
+                <option value="">全部交易</option>
+                <option value="transfer">转账</option>
+                <option value="deposit">存款</option>
+                <option value="withdraw">取款</option>
+            </select>
+        </div>
+        <button class="button">查询</button>
+    </div>
+
+    <div class="transactions-list card">
+        <table>
+            <thead>
+            <tr>
+                <th>交易日期</th>
+                <th>交易类型</th>
+                <th>交易金额</th>
+                <th>交易对手</th>
+                <th>余额</th>
+                <th>备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>2024-01-20</td>
+                <td>转入</td>
+                <td class="amount-plus">+¥500.00</td>
+                <td>王五</td>
+                <td>¥10,500.00</td>
+                <td>报销</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

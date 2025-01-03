@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lanqiao.bankproject.mappers.BankInfoMapper">
+
+	<!--实体映射-->
+	<resultMap id="base_result_map" type="cn.lanqiao.bankproject.entity.po.BankInfo">
+		<!---->
+		<id column="id" property="id"  />
+		<!--银行卡号-->
+		<result column="bank_card" property="bankCard"  />
+		<!--银行卡余额-->
+		<result column="bank_balance" property="bankBalance"  />
+		<!--开户行-->
+		<result column="bank_name" property="bankName"  />
+		<!--交易密码-->
+		<result column="trade_pwd" property="tradePwd"  />
+	</resultMap>
+
+</mapper>

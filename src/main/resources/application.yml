@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: root
+    password: 20010720Lmx
+    url: jdbc:mysql://47.109.206.82/bank_database?&useSSL=false&serverTimezone=UTC&characterEncoding=utf8&characterSetResults=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  transaction:
+    rollback-on-commit-failure: true
+    default-timeout: 30
+  data:
+    redis:
+      host: 192.168.88.130
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
+      database: 0
