@@ -1,6 +1,6 @@
 package cn.lanqiao.bankproject.controller;
 
-import cn.lanqiao.bankproject.service.UserService;
+import cn.lanqiao.bankproject.service.UsersService;
 import cn.lanqiao.bankproject.utils.ResponseUtils;
 import cn.lanqiao.bankproject.mappers.UsersMapper;
 import cn.lanqiao.bankproject.service.UsersService;

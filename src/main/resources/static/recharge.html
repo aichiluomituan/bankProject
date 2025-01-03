@@ -151,6 +151,8 @@
     // 处理充值
     function handleRecharge() {
         const amount = customAmountInput.value;
+        const bankCard = document.getElementById("bankcard").value; // 添加这行
+
         if (!amount || amount <= 0) {
             alert('请输入有效的充值金额！');
             return;
@@ -161,7 +163,7 @@
         // 充值成功后可以跳转回首页
         // window.location.href = 'index.html';
         axios({
-            url: 'http://localhost:8080/money/Recharge',
+            url: 'http://localhost:8080/money/recharge',
             method: 'post',
             data: {
                 bank_card: document.getElementById("bankcard").value,
@@ -181,7 +183,7 @@
         });
 
         console.log('充值请求参数:', {
-            bank_card: bankCard,
+            bank_card: bankCard,  // 修改这里：使用正确的变量名
             balance: amount
         });
     }
