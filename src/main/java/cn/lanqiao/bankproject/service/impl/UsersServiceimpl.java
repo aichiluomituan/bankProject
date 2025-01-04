@@ -14,26 +14,22 @@ import java.util.List;
 public class UsersServiceimpl implements UsersService {
     @Autowired
     private UsersMapper usersMapper;
-    @Override
-    public PageHelper<Users> getUsersList(UsersQuery query) {
-        // // 计算偏移量
-        // query.setOffset((query.getPageNum() - 1) * query.getPageSize());
-        //
-        // // 查询总记录数
-        // int total = usersMapper.countUsers(query);
-        //
-        // // 查询数据列表
-        // List<Users> list = usersMapper.selectUsersList(query);
-        //
-        // // 封装分页结果
-        // PageHelper<Users> pageHelper = new PageHelper<>();
-        // pageHelper.setList(list);
-        // pageHelper.setTotal(total);
-        // pageHelper.setPageNum(query.getPageNum());
-        // pageHelper.setPageSize(query.getPageSize());
-        // pageHelper.setPages((total + query.getPageSize() - 1) / query.getPageSize());
 
-        // return pageHelper;
-        return null;
+
+    @Override
+    public PageHelper<Users> selectUsersList(String status, String username, int pageNum, int pageSize) {
+        //一共有多少条数据
+        // Integer totalnum = usersMapper.totalNum(status,username);
+        //初始索引
+        int offset=(pageNum-1)*pageSize;
+        // List<TStudent> tStudents = tStudentMapper.pageList(classNo, name,pageNum, pageSize,offset);
+        List<Users> users=usersMapper.selectUsersList(status,username,pageNum,pageSize,offset);
+        //创建分页对象
+        PageHelper<Users> pageHelper=new PageHelper<>();
+        pageHelper.setPageSize(pageSize);
+        pageHelper.setPageNum(pageNum);
+        // pageHelper.setPages((int)Math.ceil((double)totalnum/pageSize));
+        pageHelper.setList(users);
+        return pageHelper;
     }
 }

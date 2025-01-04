@@ -8,15 +8,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersQuery {
-    private long userId;
-    private String name;
-    private String accountNo;
+    private Long Id;
+    private String username;
+    private String bank_card;
     private String phone;
-    private String registerTime;
-    private double balance;
-    private long status;
-    private java.sql.Timestamp createTime;
-    private java.sql.Timestamp updateTime;
+    private String address;
+    private Integer status;
+    private String balance;
+    // 分页参数
+    private Integer pageNum = 1;
+    private Integer pageSize = 10;
+}
 
 
 
@@ -29,4 +31,3 @@ public class UsersQuery {
     //     private String searchText;
     //     private Integer status;
     // }
-}

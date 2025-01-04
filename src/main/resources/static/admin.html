@@ -270,88 +270,96 @@
         </div>
     </div>
 
+    <!--    &lt;!&ndash; 用户管理内容 &ndash;&gt;-->
+    <!--    <div id="users-content" style="display: none;">-->
+    <!--        <div class="header">-->
+    <!--            <h2>用户管理</h2>-->
+    <!--            <div class="search-bar">-->
+    <!--                <input type="text" placeholder="搜索用户...">-->
+    <!--                <button class="button">搜索</button>-->
+    <!--                <button class="button" style="background-color: #4caf50;" onclick="showAddUserModal()">-->
+    <!--                    添加用户-->
+    <!--                </button>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="filter-section" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px;">-->
+    <!--            <div style="display: flex; gap: 15px;">-->
+    <!--                <div>-->
+    <!--                    <label>账户状态：</label>-->
+    <!--                    <select id="statusFilter" style="padding: 5px;">-->
+    <!--                        <option value="all">全部</option>-->
+    <!--                        <option value="active">正常</option>-->
+    <!--                        <option value="locked">锁定</option>-->
+    <!--                    </select>-->
+    <!--                </div>-->
+    <!--                <div>-->
+    <!--                    <label>注册时间：</label>-->
+    <!--                    <input type="date" style="padding: 5px;">-->
+    <!--                    <span>至</span>-->
+    <!--                    <input type="date" style="padding: 5px;">-->
+    <!--                </div>-->
+    <!--                <button class="button" style="height: 30px;">筛选</button>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="data-table">-->
+    <!--            <table>-->
+    <!--                <thead>-->
+    <!--                <tr>-->
+    <!--                    <th><input type="checkbox" onclick="toggleAllUsers(this)"> 全选</th>-->
+    <!--                    <th>用户ID</th>-->
+    <!--                    <th>姓名</th>-->
+    <!--                    <th>账户号码</th>-->
+    <!--                    <th>手机号码</th>-->
+    <!--                    <th>注册时间</th>-->
+    <!--                    <th>账户余额</th>-->
+    <!--                    <th>状态</th>-->
+    <!--                    <th>操作</th>-->
+    <!--                </tr>-->
+    <!--                </thead>-->
+    <!--                <tbody>-->
+    <!--                <tr>-->
+    <!--                    <td><input type="checkbox" name="userSelect"></td>-->
+    <!--                    <td>001</td>-->
+    <!--                    <td>张三</td>-->
+    <!--                    <td>6225 **** **** 8888</td>-->
+    <!--                    <td>138****8888</td>-->
+    <!--                    <td>2024-01-20</td>-->
+    <!--                    <td>¥10,000.00</td>-->
+    <!--                    <td><span class="status-badge status-active">正常</span></td>-->
+    <!--                    <td>-->
+    <!--                        <div class="action-buttons">-->
+    <!--                            <button class="action-button edit-button" onclick="editUser('001')">编辑</button>-->
+    <!--                            <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">-->
+    <!--                                重置密码-->
+    <!--                            </button>-->
+    <!--                            <button class="action-button delete-button">锁定</button>-->
+    <!--                        </div>-->
+    <!--                    </td>-->
+    <!--                </tr>-->
+    <!--                &lt;!&ndash; 可以添加更多用户数据 &ndash;&gt;-->
+    <!--                </tbody>-->
+    <!--            </table>-->
+
+    <!--            &lt;!&ndash; 分页控件 &ndash;&gt;-->
+    <!--            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">-->
+    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">上一页</button>-->
+    <!--                <button class="button" style="background-color: #1e88e5;">1</button>-->
+    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">2</button>-->
+    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">3</button>-->
+    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">下一页</button>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!-- ... 其他代码保持不变 ... -->
+
     <!-- 用户管理内容 -->
     <div id="users-content" style="display: none;">
-        <div class="header">
-            <h2>用户管理</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="搜索用户...">
-                <button class="button">搜索</button>
-                <button class="button" style="background-color: #4caf50;" onclick="showAddUserModal()">
-                    添加用户
-                </button>
-            </div>
-        </div>
-
-        <div class="filter-section" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px;">
-            <div style="display: flex; gap: 15px;">
-                <div>
-                    <label>账户状态：</label>
-                    <select id="statusFilter" style="padding: 5px;">
-                        <option value="all">全部</option>
-                        <option value="active">正常</option>
-                        <option value="locked">锁定</option>
-                    </select>
-                </div>
-                <div>
-                    <label>注册时间：</label>
-                    <input type="date" style="padding: 5px;">
-                    <span>至</span>
-                    <input type="date" style="padding: 5px;">
-                </div>
-                <button class="button" style="height: 30px;">筛选</button>
-            </div>
-        </div>
-
-        <div class="data-table">
-            <table>
-                <thead>
-                <tr>
-                    <th><input type="checkbox" onclick="toggleAllUsers(this)"> 全选</th>
-                    <th>用户ID</th>
-                    <th>姓名</th>
-                    <th>账户号码</th>
-                    <th>手机号码</th>
-                    <th>注册时间</th>
-                    <th>账户余额</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox" name="userSelect"></td>
-                    <td>001</td>
-                    <td>张三</td>
-                    <td>6225 **** **** 8888</td>
-                    <td>138****8888</td>
-                    <td>2024-01-20</td>
-                    <td>¥10,000.00</td>
-                    <td><span class="status-badge status-active">正常</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-button edit-button" onclick="editUser('001')">编辑</button>
-                            <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">
-                                重置密码
-                            </button>
-                            <button class="action-button delete-button">锁定</button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- 可以添加更多用户数据 -->
-                </tbody>
-            </table>
-
-            <!-- 分页控件 -->
-            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="button" style="background-color: #f5f5f5; color: #333;">上一页</button>
-                <button class="button" style="background-color: #1e88e5;">1</button>
-                <button class="button" style="background-color: #f5f5f5; color: #333;">2</button>
-                <button class="button" style="background-color: #f5f5f5; color: #333;">3</button>
-                <button class="button" style="background-color: #f5f5f5; color: #333;">下一页</button>
-            </div>
-        </div>
+        <iframe src="admin-users.html" style="width: 100%; height: calc(100vh - 40px); border: none;"></iframe>
     </div>
+
+    <!-- ... 其他代码保持不变 ... -->
 
     <!-- 交易监控内容 -->
     <div id="transactions-content" style="display: none;">

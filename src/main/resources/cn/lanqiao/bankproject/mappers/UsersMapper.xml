@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lanqiao.bankproject.mappers.UsersMapper">
+    <!--实体映射-->
+    <resultMap id="base_result_map" type="cn.lanqiao.bankproject.entity.po.Users">
+        <!---->
+        <id column="id" property="id"  />
+        <!--姓名-->
+        <result column="username" property="username"  />
+        <!--手机-->
+        <result column="phone" property="phone"  />
+        <!--银行卡号-->
+        <result column="bankcard" property="bank_card"  />
+        <!--地址-->
+        <result column="address" property="address"  />
+
+        <result column="status" property="status"/>
+    </resultMap>
+<!--    <select id="totalNum" resultType="int" resultMap="base_result_map">-->
+<!--        select count(*) from user-->
+<!--        <where>-->
+<!--            <if test="status!=null and status!=''">-->
+<!--                and status=#{status}-->
+<!--            </if>-->
+<!--            <if test="username!=null and username!=''">-->
+<!--                and username like concat('%', #{username}, '%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        </select>-->
+    <select id="selectUsersList" resultType="cn.lanqiao.bankproject.entity.po.Users" resultMap="base_result_map">
+        select * from user
+                <where>
+                    <if test="status!=null and status!=''">
+                        and status=#{status}
+                    </if>
+                    <if test="username!=null and username!=''">
+                        and username like concat('%', #{username}, '%')
+                    </if>
+                </where>
+                limit #{offset},#{pageSize}
+    </select>
+</mapper>

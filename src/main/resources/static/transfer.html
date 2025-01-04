@@ -14,19 +14,19 @@
         <form>
             <div class="form-group">
                 <label>收款账号：</label>
-                <input type="text" name="toAccount" id="toAccount" required placeholder="请输入收款人账号">
+                <input type="text" name="bankcard" id="bankcard" required placeholder="请输入收款人账号">
             </div>
             <div class="form-group">
                 <label>收款人姓名：</label>
-                <input type="text"  name="toName" id="toName" required placeholder="请输入收款人姓名">
+                <input type="text"  name="payee" id="payee" required placeholder="请输入收款人姓名">
             </div>
             <div class="form-group">
                 <label>转账金额：</label>
-                <input type="number" name="amount" id="amount" required placeholder="请输入转账金额">
+                <input type="number" name="money" id="money" required placeholder="请输入转账金额">
             </div>
             <div class="form-group">
                 <label>备注：</label>
-                <input type="text" name="notes" id="notes" placeholder="请输入转账备注">
+                <input type="text" name="remark" id="remark" placeholder="请输入转账备注">
             </div>
             <button type="button" onclick="transfer()" class="button" >确认转账</button>
         </form>
@@ -63,29 +63,58 @@
         `;
         tbody.insertBefore(newRow, tbody.firstChild); // 将新记录插入到表格顶部
     }
-
     function transfer(){
-        let toAccount = document.getElementById('toAccount').value;
-        let toName = document.getElementById('toName').value;
-        let amount = document.getElementById('amount').value;
-        axios({
-            url: 'http://localhost:8080/money/transfer',
-            method: 'post',
-            data: {
-                toaccount: toAccount,
-                toname: toName,
-                amount: amount,
-                notes: document.getElementById("notes").value
-            }
-        }).then((result) => {
-            if(result.data.code=='200'){
-                alert("转账成功")
-                // 添加转账记录到表格
-                addTransferRecord(toAccount, toName, amount, '成功');
-                // 清空表单
-                document.querySelector('form').reset();
-            }else{
-                alert("转账失败")
-            }})
-    }
+        // let bankcard = document.getElementById('bankcard').value;
+        // let payee = document.getElementById('payee').value;
+        // let money = document.getElementById('money').value;
+        // axios({
+        //     url: 'http://localhost:8080/money/transfer',
+        //     method: 'post',
+        //     data: {
+        //         bankcard: bankcard,
+        //         payee: payee,
+        //         money: money,
+        //         remark: document.getElementById("remark").value
+        //     }
+        // }).then((result) => {
+        //     if(result.data.code=='200'){
+        //         alert("转账成功")
+        //         // 添加转账记录到表格
+        //         addTransferRecord(bankcard, payee, money, '成功');
+        //         // 清空表单
+        //         document.querySelector('form').reset();
+        //     }else{
+        //         alert("转账失败")
+        //     }})
+
+            let bankcard = document.getElementById('bankcard').value;
+            let payee = document.getElementById('payee').value;
+            let money = document.getElementById('money').value;
+            let fromCard = "当前用户的卡号"; // 这里需要获取当前登录用户的卡号
+
+            axios({
+                url: 'http://localhost:8080/money/transfer',
+                method: 'post',
+                params: {
+                    fromCard: fromCard  // 添加转出方卡号
+                },
+                data: {
+                    bankcard: bankcard,
+                    payee: payee,
+                    money: money,
+                    remark: document.getElementById("remark").value
+                }
+            }).then((result) => {
+                if(result.data.code == '200'){
+                    alert("转账成功")
+                    addTransferRecord(bankcard, payee, money, '成功');
+                    document.querySelector('form').reset();
+                } else {
+                    alert("转账失败：" + result.data.msg)
+                }
+            }).catch(error => {
+                console.error('转账错误:', error);
+                alert("转账失败：" + (error.response?.data?.msg || '未知错误'));
+            });
+        }
 </script>

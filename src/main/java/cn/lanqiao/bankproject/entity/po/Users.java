@@ -8,13 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Users {
-        private Long userId;
-        private String name;
-        private String accountNo;
+        private Long Id;
+        private String username;
+        private String bank_card;
         private String phone;
-        private String registerTime;
-        private String balance;
+        private String address;
         private Integer status;
-        private String createTime;
-        private String updateTime;
 }

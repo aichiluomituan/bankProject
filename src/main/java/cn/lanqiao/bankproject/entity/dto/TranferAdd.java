@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TranferAdd {
     private long id;
-    private String toaccount;
-    private String toname;
-    private double amount;
-    private String notes;
+    private String payee;
+    private String bankcard;
+    private double money;
+    private String remark;
 }

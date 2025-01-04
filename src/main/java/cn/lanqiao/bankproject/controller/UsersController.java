@@ -1,5 +1,6 @@
 package cn.lanqiao.bankproject.controller;
 
+import cn.lanqiao.bankproject.entity.query.PageHelperQuery;
 import cn.lanqiao.bankproject.service.UsersService;
 import cn.lanqiao.bankproject.utils.ResponseUtils;
 import cn.lanqiao.bankproject.mappers.UsersMapper;
@@ -18,8 +19,8 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
     @RequestMapping("/list")
-    public ResponseUtils list(@RequestBody UsersQuery usersQuery) {
-        PageHelper<Users> pageHelper =usersService.getUsersList(usersQuery);
-        return new ResponseUtils<>(200, "查询成功", pageHelper);
+    public ResponseUtils list(@RequestBody PageHelperQuery pageHelperQuery) {
+        PageHelper<Users> pageHelper = usersService.selectUsersList(pageHelperQuery.getStatus(),pageHelperQuery.getUsername(),pageHelperQuery.getPageNum(),pageHelperQuery.getPageSize());
+        return new ResponseUtils<>(200, "分页查询成功成功", pageHelper);
     }
 }
