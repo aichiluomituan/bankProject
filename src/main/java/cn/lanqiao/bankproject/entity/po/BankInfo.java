@@ -27,7 +27,7 @@ public class BankInfo implements Serializable {
 	/**
 	 * 银行卡余额
 	 */
-	private BigDecimal bankBalance;
+	private Double bankBalance;
 
 	/**
 	 * 开户行
@@ -56,11 +56,11 @@ public class BankInfo implements Serializable {
 		return this.bankCard;
 	}
 
-	public void setBankBalance(BigDecimal bankBalance){
+	public void setBankBalance(Double bankBalance){
 		this.bankBalance = bankBalance;
 	}
 
-	public BigDecimal getBankBalance(){
+	public Double getBankBalance(){
 		return this.bankBalance;
 	}
 
@@ -79,7 +79,10 @@ public class BankInfo implements Serializable {
 	public String getTradePwd(){
 		return this.tradePwd;
 	}
-
+	public BankInfo(String bankCard, Double bankBalance) {
+		this.bankCard = bankCard;
+		this.bankBalance = bankBalance;
+	}
 	@Override
 	public String toString (){
 		return "id:"+(id == null ? "空" : id)+"，银行卡号:"+(bankCard == null ? "空" : bankCard)+"，银行卡余额:"+(bankBalance == null ? "空" : bankBalance)+"，开户行:"+(bankName == null ? "空" : bankName)+"，交易密码:"+(tradePwd == null ? "空" : tradePwd);

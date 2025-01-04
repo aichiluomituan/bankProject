@@ -2,10 +2,11 @@ package cn.lanqiao.bankproject.entity.po;
 
 import cn.lanqiao.bankproject.entity.enums.DateTimePatternEnum;
 import cn.lanqiao.bankproject.utils.DateUtil;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -14,88 +15,66 @@ import java.io.Serializable;
 /**
  * 交易表
  */
+@Data
+@AllArgsConstructor
 public class Trade implements Serializable {
-
-
-	/**
-	 * 
-	 */
 	private Long id;
-
-	/**
-	 * 交易日期
-	 */
+	  // 交易日期
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date date;
-
-	/**
-	 * 交易类型
-	 */
+	private String bankCard;
+	  // 交易类型(存款、取款、转账)
 	private String tradeType;
-
-	/**
-	 * 金额
-	 */
-	private BigDecimal money;
-
-	/**
-	 * 交易状态
-	 */
+	 // 金额
+	private Double money;
+	 // 交易状态
 	private String tradeState;
-
-	/**
-	 * 备注
-	 */
+	 // 备注
 	private String remark;
+	// 付款方
+	private String payer;
+	// 收款方
+	private String payee;
 
+	public Trade() {
+	}
 
-	public void setId(Long id){
+	public Trade(Long id, Date date, String tradeType, String tradeState, Double money, String remark) {
 		this.id = id;
-	}
-
-	public Long getId(){
-		return this.id;
-	}
-
-	public void setDate(Date date){
 		this.date = date;
-	}
-
-	public Date getDate(){
-		return this.date;
-	}
-
-	public void setTradeType(String tradeType){
 		this.tradeType = tradeType;
-	}
-
-	public String getTradeType(){
-		return this.tradeType;
-	}
-
-	public void setMoney(BigDecimal money){
-		this.money = money;
-	}
-
-	public BigDecimal getMoney(){
-		return this.money;
-	}
-
-	public void setTradeState(String tradeState){
 		this.tradeState = tradeState;
-	}
-
-	public String getTradeState(){
-		return this.tradeState;
-	}
-
-	public void setRemark(String remark){
+		this.money = money;
 		this.remark = remark;
 	}
 
-	public String getRemark(){
-		return this.remark;
+	public Trade(String payee, String payer, String remark, Double money, Date date) {
+		this.payee = payee;
+		this.payer = payer;
+		this.remark = remark;
+		this.money = money;
+		this.date = date;
+	}
+
+	public Trade(Date date, String tradeType, Double money, String remark, String payer, String payee) {
+		this.date = date;
+		this.tradeType = tradeType;
+		this.money = money;
+		this.remark = remark;
+		this.payer = payer;
+		this.payee = payee;
+	}
+
+	public Trade(Date date, Long id, String tradeType, Double money, String tradeState, String remark, String payer, String payee) {
+		this.date = date;
+		this.id = id;
+		this.tradeType = tradeType;
+		this.money = money;
+		this.tradeState = tradeState;
+		this.remark = remark;
+		this.payer = payer;
+		this.payee = payee;
 	}
 
 	@Override
