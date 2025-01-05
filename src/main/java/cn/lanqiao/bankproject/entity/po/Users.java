@@ -14,4 +14,5 @@ public class Users {
         private String phone;
         private String address;
         private Integer status;
+        private double bank_balance;
 }

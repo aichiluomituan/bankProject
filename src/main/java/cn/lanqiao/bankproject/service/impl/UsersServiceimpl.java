@@ -17,22 +17,6 @@ public class UsersServiceimpl implements UsersService {
     @Autowired
     private UsersMapper usersMapper;
 
-    // @Override
-    // public PageHelper<Users> selectUsersList(String status, String username, int pageNum, int pageSize) {
-    //     //一共有多少条数据
-    //     int totalNum = usersMapper.totalNum();
-    //     //初始索引
-    //     int offset = (pageNum - 1) * pageSize;
-    //     // List<TStudent> tStudents = tStudentMapper.pageList(classNo, name,pageNum, pageSize,offset);
-    //     List<Users> users = usersMapper.selectUsersList(status, username, pageNum, pageSize, offset);
-    //     //创建分页对象
-    //     PageHelper<Users> pageHelper = new PageHelper<>();
-    //     pageHelper.setPageSize(pageSize);
-    //     pageHelper.setPageNum(pageNum);
-    //     pageHelper.setPages((int) Math.ceil((double) totalNum / pageSize));
-    //     pageHelper.setList(users);
-    //     return pageHelper;
-    // }
     @Override
     public PageHelper<Users> selectUsersList(String status, String username, int pageNum, int pageSize) {
         int totalNum = usersMapper.totalNum();
@@ -44,5 +28,15 @@ public class UsersServiceimpl implements UsersService {
         pageHelper.setPages((int) Math.ceil((double) totalNum / pageSize));
         pageHelper.setList(users);
         return pageHelper;
+    }
+
+    @Override
+    public int updatestatus(Long id, String status) {
+        int result = usersMapper.updatestatus(id, status);
+        if(result>0){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 }

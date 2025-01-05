@@ -16,6 +16,7 @@
         <result column="address" property="address"  />
 
         <result column="status" property="status"/>
+        <result column="bank_balance" property="bank_balance"/>
     </resultMap>
 <!--    <select id="totalNum" resultType="java.lang.Integer" resultMap="userresult">-->
 <!--        select COUNT(*) from user-->
@@ -29,13 +30,13 @@
 <!--        </where>-->
 <!--        </select>-->
     <select id="selectUsersList" resultType="cn.lanqiao.bankproject.entity.po.Users" resultMap="userresult">
-        select * from user
+        select u.* ,b.bank_balance from user u left join bank_info b on u.bank_card=b.bank_card
                 <where>
                     <if test="status!=null and status!=''">
-                        and status=#{status}
+                        and u.status=#{status}
                     </if>
                     <if test="username!=null and username!=''">
-                        and username like concat('%', #{username}, '%')
+                        and u.username like concat('%', #{username}, '%')
                     </if>
                 </where>
                 limit #{offset},#{pageSize}

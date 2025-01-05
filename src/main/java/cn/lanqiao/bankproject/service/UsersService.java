@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface UsersService {
     PageHelper<Users> selectUsersList(String status, String username, int pageNum, int pageSize);
+    int updatestatus(@Param("id") Long id,@Param("status") String status);
 }

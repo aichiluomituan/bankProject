@@ -95,12 +95,7 @@
       background-color: #ffebee;
       color: #f44336;
     }
-    #whitebutton{
-        margin-top: 20px;     /* 上边距 */
-        margin-left: 20px;    /* 左边距 */
-        margin-right: 20px;   /* 右边距 */
-        margin-bottom: 20px;  /* 下边距 */
-    }
+  </style>
   </style>
 </head>
 <body>
@@ -151,26 +146,54 @@
   <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
     <tr>
       <td width="50%">共 <span class="right-text09" id="totalPages">0</span> 页 | 第 <span class="right-text09" id="currentPage">1</span> 页</td>
-      <td width="49%" align="right">
+      <td width="12%" align="right">
         [<a href="javascript:void(0)" onclick="changePage(1)" class="right-font08">首页</a> |
         <a href="javascript:void(0)" onclick="changePage(currentPage-1)" class="right-font08">上一页</a> |
         <a href="javascript:void(0)" onclick="changePage(currentPage+1)" class="right-font08">下一页</a> |
         <a href="javascript:void(0)" onclick="changePage(totalPages)" class="right-font08">末页</a>]
-        转至：
+<!--        转至：-->
       </td>
-      <td width="1%">
-        <table width="20" border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td width="1%"><input name="pageNum" type="text" class="right-textfield03" size="1" id="whitebutton"/></td>
-            <td width="87%"><input name="Submit23222" type="button" class="right-button06" value=" " onclick="goToPage()" /></td>
-          </tr>
-        </table>
-      </td>
+<!--      <td width="1%">-->
+<!--        <table width="20" border="0" cellspacing="0" cellpadding="0">-->
+<!--          <tr>-->
+<!--            <td width="1%"><input name="pageNum" type="text" class="right-textfield03" size="1" id="whitebutton"/></td>-->
+<!--            <td width="87%"><input name="Submit23222" type="button" class="right-button06" value=" " onclick="goToPage()" /></td>-->
+<!--          </tr>-->
+<!--        </table>-->
+<!--      </td>-->
     </tr>
   </table>
 
+
+
   <script src="js/axios.min.js"></script>
-  <script>
+
+    <script>
+      // 切换用户状态（锁定/解锁）
+      function toggleUserStatus(userId, currentStatus) {
+        // 将currentStatus转换为字符串进行比较
+        const status = String(currentStatus);
+        // 如果当前是锁定状态(1)，则解锁为0；如果是正常状态(0)，则锁定为1
+        const newStatus = status === '1' ? '0' : '1';
+        const action = status === '1' ? '解锁' : '锁定';
+
+        if (confirm(`确定要${action}该用户吗？`)) {
+          axios.post('/Users/updateStatus', {
+            id: userId,
+            status: newStatus
+          }).then(response => {
+            if (response.data.code === 200) {
+              // 更新成功后刷新表格数据
+              loadUserData(currentPage);
+            } else {
+              alert(`${action}失败：` + response.data.msg);
+            }
+          }).catch(error => {
+            console.error(`${action}用户错误:`, error);
+            alert(`${action}失败`);
+          });
+        }
+      }
     // 定义分页相关变量
     let currentPage = 1;
     let totalPages = 0;
@@ -300,6 +323,7 @@
             <td>${user.bankcard || '-'}</td>
             <td>${user.phone || '-'}</td>
             <td>${user.address || '-'}</td>
+             <td>${user.bank_balance ? '￥' + user.bank_balance.toFixed(2) : '-'}</td>
             <td>
                 <span class="status-badge ${status === '0' ? 'status-active' : 'status-locked'}">
                     ${status === '0' ? '正常' : '锁定'}
@@ -307,10 +331,10 @@
             </td>
             <td>
                 <div class="action-buttons">
-                    <button class="action-button edit-button" onclick="editUser(${user.id})">编辑</button>
-                    <button class="action-button" onclick="resetPassword(${user.id})">
-                        重置密码
-                    </button>
+                    <button class="action-button edit-button" onclick="editUser(${user.id}) ">编辑</button>
+<!--                    <button class="action-button" onclick="resetPassword(${user.id})">-->
+<!--                        重置密码-->
+<!--                     </button>-->
                     <button class="action-button delete-button" onclick="toggleUserStatus(${user.id}, '${status}')">
                         ${status === '0' ? '锁定' : '解锁'}
                     </button>

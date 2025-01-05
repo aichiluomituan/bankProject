@@ -41,4 +41,13 @@ public class UsersController {
             return new ResponseUtils<>(500, "查询失败: " + e.getMessage(), null);
         }
     }
+    @RequestMapping("/updateUserStatus")
+    public ResponseUtils updateUserStatus(@RequestBody Users user) {
+        try {
+            int updatestatus = usersService.updatestatus(user.getId(), String.valueOf(user.getStatus()));
+            return new ResponseUtils<>(200, "更新状态成功", null);
+        } catch (Exception e) {
+            return new ResponseUtils<>(500, "更新状态失败: " + e.getMessage(), null);
+        }
     }
+}
