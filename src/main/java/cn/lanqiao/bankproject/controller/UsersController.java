@@ -18,9 +18,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsersController {
     @Autowired
     private UsersService usersService;
+
     @RequestMapping("/list")
     public ResponseUtils list(@RequestBody PageHelperQuery pageHelperQuery) {
-        PageHelper<Users> pageHelper = usersService.selectUsersList(pageHelperQuery.getStatus(),pageHelperQuery.getUsername(),pageHelperQuery.getPageNum(),pageHelperQuery.getPageSize());
-        return new ResponseUtils<>(200, "分页查询成功成功", pageHelper);
+        // PageHelper<Users> pageHelper = usersService.selectUsersList(pageHelperQuery.getStatus(), pageHelperQuery.getUsername(), pageHelperQuery.getPageNum(), pageHelperQuery.getPageSize());
+        // return new ResponseUtils<>(200, "分页查询成功成功", pageHelper);
+        // 打印接收到的参数
+        System.out.println("接收到的查询参数: " + pageHelperQuery);
+
+        try {
+            PageHelper<Users> result = usersService.selectUsersList(
+                    pageHelperQuery.getStatus(),
+                    pageHelperQuery.getUsername(),
+                    pageHelperQuery.getPageNum(),
+                    pageHelperQuery.getPageSize()
+            );
+            // 打印查询结果
+            System.out.println("查询结果: " + result);
+            return new ResponseUtils<>(200, "查询成功", result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseUtils<>(500, "查询失败: " + e.getMessage(), null);
+        }
     }
-}
+    }

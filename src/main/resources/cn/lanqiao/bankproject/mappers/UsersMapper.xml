@@ -3,32 +3,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.lanqiao.bankproject.mappers.UsersMapper">
     <!--实体映射-->
-    <resultMap id="base_result_map" type="cn.lanqiao.bankproject.entity.po.Users">
+    <resultMap id="userresult" type="cn.lanqiao.bankproject.entity.po.Users">
         <!---->
         <id column="id" property="id"  />
         <!--姓名-->
         <result column="username" property="username"  />
+        <!--银行卡号-->
+        <result column="bank_card" property="bankcard"  />
         <!--手机-->
         <result column="phone" property="phone"  />
-        <!--银行卡号-->
-        <result column="bankcard" property="bank_card"  />
         <!--地址-->
         <result column="address" property="address"  />
 
         <result column="status" property="status"/>
     </resultMap>
-<!--    <select id="totalNum" resultType="int" resultMap="base_result_map">-->
-<!--        select count(*) from user-->
+<!--    <select id="totalNum" resultType="java.lang.Integer" resultMap="userresult">-->
+<!--        select COUNT(*) from user-->
 <!--        <where>-->
-<!--            <if test="status!=null and status!=''">-->
-<!--                and status=#{status}-->
-<!--            </if>-->
-<!--            <if test="username!=null and username!=''">-->
-<!--                and username like concat('%', #{username}, '%')-->
-<!--            </if>-->
+<!--         <if test="status!=null and status!=''">-->
+<!--           and status=#{status}-->
+<!--         </if>-->
+<!--&lt;!&ndash;            <if test="username!=null and username!=''">&ndash;&gt;-->
+<!--&lt;!&ndash;                and username =#{username}&ndash;&gt;-->
+<!--&lt;!&ndash;            </if>&ndash;&gt;-->
 <!--        </where>-->
 <!--        </select>-->
-    <select id="selectUsersList" resultType="cn.lanqiao.bankproject.entity.po.Users" resultMap="base_result_map">
+    <select id="selectUsersList" resultType="cn.lanqiao.bankproject.entity.po.Users" resultMap="userresult">
         select * from user
                 <where>
                     <if test="status!=null and status!=''">

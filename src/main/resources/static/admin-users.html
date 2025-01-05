@@ -95,6 +95,12 @@
       background-color: #ffebee;
       color: #f44336;
     }
+    #whitebutton{
+        margin-top: 20px;     /* 上边距 */
+        margin-left: 20px;    /* 左边距 */
+        margin-right: 20px;   /* 右边距 */
+        margin-bottom: 20px;  /* 下边距 */
+    }
   </style>
 </head>
 <body>
@@ -103,9 +109,9 @@
   <div class="search-bar">
     <input type="text" placeholder="搜索用户...">
     <button class="button">搜索</button>
-<!--    <button class="button" style="background-color: #4caf50;" onclick="showAddUserModal()">-->
-<!--      添加用户-->
-<!--    </button>-->
+    <!--    <button class="button" style="background-color: #4caf50;" onclick="showAddUserModal()">-->
+    <!--      添加用户-->
+    <!--    </button>-->
   </div>
 </div>
 
@@ -114,18 +120,12 @@
     <div>
       <label>账户状态：</label>
       <select id="statusFilter" style="padding: 5px;">
-        <option value="all">全部</option>
-        <option value="active">正常</option>
-        <option value="locked">锁定</option>
+        <option value="">全部</option>
+        <option value="0">正常</option>
+        <option value="1">锁定</option>
       </select>
-<!--    </div>-->
-<!--    <div>-->
-<!--      <label>注册时间：</label>-->
-<!--      <input type="date" style="padding: 5px;">-->
-<!--      <span>至</span>-->
-<!--      <input type="date" style="padding: 5px;">-->
     </div>
-<!--    <button class="button" style="height: 30px;">筛选</button>-->
+    <!--    <button class="button" style="height: 30px;">筛选</button>-->
   </div>
 </div>
 
@@ -148,170 +148,198 @@
     <!-- 用户数据将通过 JavaScript 动态加载 -->
     </tbody>
   </table>
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="right-font08">
+    <tr>
+      <td width="50%">共 <span class="right-text09" id="totalPages">0</span> 页 | 第 <span class="right-text09" id="currentPage">1</span> 页</td>
+      <td width="49%" align="right">
+        [<a href="javascript:void(0)" onclick="changePage(1)" class="right-font08">首页</a> |
+        <a href="javascript:void(0)" onclick="changePage(currentPage-1)" class="right-font08">上一页</a> |
+        <a href="javascript:void(0)" onclick="changePage(currentPage+1)" class="right-font08">下一页</a> |
+        <a href="javascript:void(0)" onclick="changePage(totalPages)" class="right-font08">末页</a>]
+        转至：
+      </td>
+      <td width="1%">
+        <table width="20" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="1%"><input name="pageNum" type="text" class="right-textfield03" size="1" id="whitebutton"/></td>
+            <td width="87%"><input name="Submit23222" type="button" class="right-button06" value=" " onclick="goToPage()" /></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
 
-  <!-- 分页控件 -->
-  <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-    <button class="button" style="background-color: #f5f5f5; color: #333;">上一页</button>
-    <button class="button" style="background-color: #1e88e5;">1</button>
-    <button class="button" style="background-color: #f5f5f5; color: #333;">2</button>
-    <button class="button" style="background-color: #f5f5f5; color: #333;">3</button>
-    <button class="button" style="background-color: #f5f5f5; color: #333;">下一页</button>
-  </div>
-</div>
+  <script src="js/axios.min.js"></script>
+  <script>
+    // 定义分页相关变量
+    let currentPage = 1;
+    let totalPages = 0;
+    const pageSize = 8;  // 修改为8条每页
 
-<script src="js/axios.min.js"></script>
-<script>
-  let currentPage = 1;
-  const pageSize = 10;
+    // 加载用户数据
+    function loadUserData(page = 1) {
+      const username = document.querySelector('.search-bar input').value;
+      let status = document.getElementById('statusFilter').value;
 
-  // 页面加载时执行
-  window.onload = function() {
-    loadUserData();
+      // 打印请求参数，便于调试
+      console.log('请求参数:', {
+        pageNum: page,
+        pageSize: pageSize,
+        status: status,
+        username: username
+      });
 
-    // 添加搜索按钮事件监听
-    document.querySelector('.search-bar button').addEventListener('click', function() {
-      loadUserData();
-    });
+      axios({
+        url: "/Users/list",  // 确保URL正确
+        method: "post",
+        data: {
+          pageNum: page,
+          pageSize: pageSize,
+          status: status,
+          username: username
+        },
+        headers: {
+          'Content-Type': 'application/json'  // 添加请求头
+        }
+      }).then(response => {
+        console.log('响应数据:', response.data);  // 打印响应数据
 
-    // 添加状态筛选事件监听
-    document.getElementById('statusFilter').addEventListener('change', function() {
-      loadUserData();
-    });
-  };
+        if (response.data.code === 200) {
+          const data = response.data.data;
+          if (data && data.list) {  // 检查数据是否存在
+            // 更新分页信息
+            currentPage = data.pageNum;
+            totalPages = data.pages;
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('totalPages').textContent = totalPages;
 
-  // 加载用户数据
-  function loadUserData() {
-    const username = document.querySelector('.search-bar input').value;
-    let status = document.getElementById('statusFilter').value;
+            // 渲染用户表格
+            renderUserTable(data.list);
+          } else {
+            console.error('返回数据格式不正确:', data);
+            alert('数据格式不正确');
+          }
+        } else {
+          console.error('请求失败:', response.data.msg);
+          alert('获取用户数据失败：' + response.data.msg);
+        }
+      }).catch(error => {
+        console.error('请求错误:', error);
+        alert('获取用户数据失败：' + (error.response?.data?.msg || error.message));
+      });
+    }
+    // 切换页码
+    function changePage(page) {
+      // 添加边界检查
+      if (page < 1) {
+        alert('已经是第一页了');
+        return;
+      }
+      if (page > totalPages) {
+        alert('已经是最后一页了');
+        return;
+      }
+      currentPage = page;
+      loadUserData(page);
+    }
 
-    // 转换状态值
-    if (status === 'active') status = '1';
-    else if (status === 'locked') status = '0';
-    else status = '';
+    // 跳转到指定页
+    function goToPage() {
+      const pageInput = document.querySelector('input[name="pageNum"]');
+      const page = parseInt(pageInput.value);
+      if (isNaN(page) || page < 1 || page > totalPages) {
+        alert('请输入有效的页码！');
+        return;
+      }
+      currentPage = page;
+      loadUserData(page);
+    }
 
-    const queryData = {
-      pageNum: currentPage,
-      pageSize: pageSize,
-      status: status,
-      username: username
+    // 页面加载时执行
+    window.onload = function() {
+      loadUserData(1);  // 初始加载第一页
+
+      // 添加搜索按钮事件监听
+      document.querySelector('.search-bar button').addEventListener('click', function() {
+        currentPage = 1;  // 搜索时重置为第一页
+        loadUserData(1);
+      });
+
+      // 添加状态筛选事件监听
+      document.getElementById('statusFilter').addEventListener('change', function() {
+        currentPage = 1;  // 筛选时重置为第一页
+        loadUserData(1);
+      });
     };
 
-    // 发起请求获取用户数据
-    axios.post('/Users/list', queryData)
-            .then(response => {
-              if (response.data.code === 200) {
-                renderUserTable(response.data.data.list);
-                renderPagination(response.data.data);
-              } else {
-                alert('获取用户数据失败：' + response.data.msg);
-              }
-            })
-            .catch(error => {
-              console.error('获取用户数据错误:', error);
-              alert('获取用户数据失败');
-            });
-  }
-
-  // 渲染用户表格
-  function renderUserTable(users) {
-    const tbody = document.getElementById('userTableBody');
-    tbody.innerHTML = users.map(user => `
+    // 渲染用户表格
+    function renderUserTable(users) {
+      const tbody = document.getElementById('userTableBody');
+      if (!users || users.length === 0) {
+        tbody.innerHTML = `
             <tr>
-                <td><input type="checkbox" name="userSelect" value="${user.id}"></td>
-                <td>${user.id || '-'}</td>
-                <td>${user.username || '-'}</td>
-                <td>${user.bank_card || '-'}</td>
-                <td>${user.phone || '-'}</td>
-                <td>${user.address || '-'}</td>
-                <td>${user.balance || '0.00'}</td>
-                <td>
-                    <span class="status-badge ${user.status === 1 ? 'status-active' : 'status-locked'}">
-                        ${user.status === 1 ? '正常' : '锁定'}
-                    </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="action-button edit-button" onclick="editUser(${user.id})">编辑</button>
-                        <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">
-                            重置密码
-                        </button>
-                        <button class="action-button delete-button" onclick="toggleUserStatus(${user.id}, ${user.status})">
-                            ${user.status === 1 ? '锁定' : '解锁'}
-                        </button>
-                    </div>
-                </td>
+                <td colspan="9" align="center">暂无数据</td>
             </tr>
-        `).join('');
-  }
-
-  // 渲染分页控件
-  function renderPagination(pageData) {
-    const paginationDiv = document.querySelector('.data-table > div');
-    const totalPages = pageData.pages;
-
-    let paginationHtml = `
-            <button class="button"
-                ${currentPage === 1 ? 'disabled' : ''}
-                onclick="changePage(${currentPage - 1})"
-                style="background-color: #f5f5f5; color: #333;">
-                上一页
-            </button>
         `;
+        return;
+      }
 
-    // 生成页码按钮
-    for (let i = 1; i <= totalPages; i++) {
-      paginationHtml += `
-                <button class="button"
-                    onclick="changePage(${i})"
-                    style="background-color: ${currentPage === i ? '#1e88e5' : '#f5f5f5'};
-                           color: ${currentPage === i ? 'white' : '#333'}">
-                    ${i}
-                </button>
-            `;
+      // 添加调试日志
+      console.log('用户数据:', users);
+
+      tbody.innerHTML = users.map(user => {
+        // 将status转换为字符串进行比较
+        const status = String(user.status);
+        console.log('用户状态:', status, typeof status);  // 调试日志
+
+        return `
+        <tr>
+            <td><input type="checkbox" name="userSelect" value="${user.id || ''}"></td>
+            <td>${user.id || '-'}</td>
+            <td>${user.username || '-'}</td>
+            <td>${user.bankcard || '-'}</td>
+            <td>${user.phone || '-'}</td>
+            <td>${user.address || '-'}</td>
+            <td>
+                <span class="status-badge ${status === '0' ? 'status-active' : 'status-locked'}">
+                    ${status === '0' ? '正常' : '锁定'}
+                </span>
+            </td>
+            <td>
+                <div class="action-buttons">
+                    <button class="action-button edit-button" onclick="editUser(${user.id})">编辑</button>
+                    <button class="action-button" onclick="resetPassword(${user.id})">
+                        重置密码
+                    </button>
+                    <button class="action-button delete-button" onclick="toggleUserStatus(${user.id}, '${status}')">
+                        ${status === '0' ? '锁定' : '解锁'}
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `}).join('');
+
+      // 打印渲染后的HTML，用于调试
+      console.log('渲染后的HTML:', tbody.innerHTML);
     }
 
-    paginationHtml += `
-            <button class="button"
-                ${currentPage === totalPages ? 'disabled' : ''}
-                onclick="changePage(${currentPage + 1})"
-                style="background-color: #f5f5f5; color: #333;">
-                下一页
-            </button>
-        `;
+    // 页面加载时执行
+    window.onload = function() {
+      loadUserData(1);  // 初始加载第一页
 
-    paginationDiv.innerHTML = paginationHtml;
-  }
+      // 添加搜索按钮事件监听
+      document.querySelector('.search-bar button').addEventListener('click', function() {
+        currentPage = 1;  // 搜索时重置为第一页
+        loadUserData(1);
+      });
 
-  // 切换页码
-  function changePage(page) {
-    currentPage = page;
-    loadUserData();
-  }
-
-  // 全选/取消全选
-  function toggleAllUsers(checkbox) {
-    const checkboxes = document.getElementsByName('userSelect');
-    checkboxes.forEach(item => {
-      item.checked = checkbox.checked;
-    });
-  }
-
-  // 编辑用户
-  function editUser(userId) {
-    console.log('编辑用户:', userId);
-    // TODO: 实现编辑用户功能
-  }
-
-  // 切换用户状态
-  function toggleUserStatus(userId, currentStatus) {
-    const newStatus = currentStatus === 1 ? 0 : 1;
-    const action = newStatus === 1 ? '解锁' : '锁定';
-
-    if (confirm(`确定要${action}该用户吗？`)) {
-      // TODO: 实现用户状态切换功能
-      console.log(`${action}用户:`, userId);
-    }
-  }
-</script>
+      // 添加状态筛选事件监听
+      document.getElementById('statusFilter').addEventListener('change', function() {
+        currentPage = 1;  // 筛选时重置为第一页
+        loadUserData(1);
+      });
+    };
+  </script>
+</div>
 </body>
 </html>

@@ -17,17 +17,5 @@ public class UsersQuery {
     private String balance;
     // 分页参数
     private Integer pageNum = 1;
-    private Integer pageSize = 10;
+    private Integer pageSize = 8;
 }
-
-
-
-    //
-    // @Data
-    // public class UsersQuery {
-    //     private Integer pageNum = 1;
-    //     private Integer pageSize = 10;
-    //     private Integer offset;
-    //     private String searchText;
-    //     private Integer status;
-    // }
