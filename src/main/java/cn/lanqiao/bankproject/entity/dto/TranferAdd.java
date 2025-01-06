@@ -13,4 +13,6 @@ public class TranferAdd {
     private String bankcard;
     private double money;
     private String remark;
+    private String payer;
+    private String fromCard;
 }

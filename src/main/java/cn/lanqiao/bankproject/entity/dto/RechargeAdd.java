@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 public class RechargeAdd {
     private String bank_card;
     private Integer bank_balance;
+    private String remark;
+    private String payee;
 }

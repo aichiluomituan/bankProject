@@ -148,43 +148,46 @@
         });
     });
 
-    // 处理充值
+    //处理充值
     function handleRecharge() {
-        const amount = customAmountInput.value;
-        const bankCard = document.getElementById("bankcard").value; // 添加这行
+        const bankCard = document.getElementById("bankcard").value;
+        const amount = parseFloat(customAmountInput.value);
+
+        // 表单验证
+        if (!bankCard) {
+            alert('请输入账户号码！');
+            return;
+        }
 
         if (!amount || amount <= 0) {
             alert('请输入有效的充值金额！');
             return;
         }
 
-        // 这里添加实际的充值处理逻辑
-        alert(`确认充值 ¥${amount} 元`);
-        // 充值成功后可以跳转回首页
-        // window.location.href = 'index.html';
+        // 构建请求数据
+        const rechargeData = {
+            bank_card: bankCard,
+            bank_balance: amount
+        };
+
+        console.log('充值请求数据:', rechargeData);
+
+        // 发送充值请求
         axios({
-            url: 'http://localhost:8080/money/recharge',
+            url: '/money/recharge',
             method: 'post',
-            data: {
-                bank_card: document.getElementById("bankcard").value,
-                bank_balance: amount
-            }
-        }).then((result) => {
-            console.log('服务器响应:', result.data);  // 打印完整响应
-            if(result.data.code == '200'){
+            data: rechargeData
+        }).then(response => {
+            console.log('充值响应:', response.data);
+            if (response.data.code === 200) {
                 alert("充值成功");
                 window.location.href = 'index.html';
             } else {
-                alert("充值失败：" + (result.data.msg || '未知错误'));
+                alert("充值失败：" + (response.data.msg || "未知错误"));
             }
         }).catch(error => {
-            console.error('充值错误详情:', error);
-            alert("充值请求失败：" + (error.response?.data?.msg || error.message || '未知错误'));
-        });
-
-        console.log('充值请求参数:', {
-            bank_card: bankCard,  // 修改这里：使用正确的变量名
-            balance: amount
+            console.error('充值错误:', error);
+            alert("充值失败：" + (error.response?.data?.msg || '系统错误'));
         });
     }
 </script>
