@@ -1,6 +1,7 @@
 package cn.lanqiao.bankproject.mappers;
 
 import cn.lanqiao.bankproject.entity.po.User;
+import cn.lanqiao.bankproject.entity.query.UserQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -35,4 +36,10 @@ public interface UserMapper {
 				   @Param("phone") String phone,
 				   @Param("email") String email,
 				   @Param("address") String address);
+
+	/**
+	 *  交易监护--查询用户卡号
+	 */
+	@Select("select bank_card from user where username = #{username}")
+	String selectBankCardAd(@Param("username") String username);
 }

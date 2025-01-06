@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lanqiao.bankproject.mappers.AdTransactionMapper">
+    <resultMap id="AdResultMap" type="cn.lanqiao.bankproject.entity.query.AdTransactionQuery">
+        <result property="id" column="id"/>
+        <result property="date" column="date"/>
+        <result property="tradeType" column="trade_type"/>
+        <result property="money" column="money"/>
+        <result property="tradeState" column="trade_state"/>
+        <result property="payer" column="payer"/>
+        <result property="payee" column="payee"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,date,tradeType
+        tradeState,money
+        payer,payee
+    </sql>
+
+    <!--  分页查询  - -条件查询  动态sql -->
+    <sql id="pageHelp">
+        <where>
+            <if test="tradeStateAd != null and tradeStateAd != 'all'">
+                and trade_state = #{tradeStateAd}
+            </if>
+            <if test="tradeTypeAd != null and tradeTypeAd != 'all'">
+                and trade_type = #{tradeTypeAd}
+            </if>
+            <if test="preTime != null and preTime != '' and endTime != null and endTime != ''">
+                and date between #{preTime} and #{endTime}
+            </if>
+            <if test="minMoney != null and minMoney != 0 and maxMoney != null and maxMoney != 0">
+                and money between #{minMoney} and #{maxMoney}
+            </if>
+            <if test="selectName != null and selectName != ''">
+                and payer like concat('%',#{selectName},'%') or payee like concat('%',#{selectName},'%')
+            </if>
+        </where>
+    </sql>
+
+    <sql id="selectLikeData">
+        <where>
+            <if test="selectName != null and selectName != ''">
+                and payer like concat('%',#{selectName},'%') or payee like concat('%',#{selectName},'%')
+            </if>
+        </where>
+    </sql>
+
+
+
+    <select id="selectATS" resultType="cn.lanqiao.bankproject.entity.query.AdTransactionQuery" resultMap="AdResultMap">
+        select *  from trade limit #{offset}, #{pageSize}
+    </select>
+
+    <select id="selectById" resultType="cn.lanqiao.bankproject.entity.query.AdTransactionQuery" resultMap="AdResultMap">
+        select * from trade where id = #{id}
+    </select>
+
+    <select id="conditionSelect" resultType="cn.lanqiao.bankproject.entity.query.AdTransactionQuery" resultMap="AdResultMap">
+        select * from trade
+        <include refid="pageHelp"/>
+        limit #{offset},#{pageSize}
+    </select>
+    <select id="countCondition" resultType="java.lang.Integer">
+        select count(*) from trade
+        <include refid="pageHelp"/>
+    </select>
+    <select id="selectLikeData" resultType="cn.lanqiao.bankproject.entity.query.AdTransactionQuery" resultMap="AdResultMap">
+        select * from trade
+        <include refid="selectLikeData"/>
+    </select>
+    <select id="selectLikeDataCount" resultType="java.lang.Integer">
+        select count(*) from trade
+        <include refid="selectLikeData"/>
+    </select>
+
+    <update id="updateById">
+        update trade set trade_state = #{tradeState} where id = #{id}
+    </update>
+
+</mapper>

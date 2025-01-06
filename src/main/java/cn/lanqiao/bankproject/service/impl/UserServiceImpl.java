@@ -156,4 +156,28 @@ public class UserServiceImpl implements UserService {
 
 		log.info("用户信息更新成功");
 	}
+
+
+
+	/**
+	 *  将查询到的卡号做隐私处理 卡号有16位 开头4位和结尾4位显示，中间用*替代
+	 */
+	@Override
+	public String privacyTreatment(String bankCard) {
+		//限定卡号的长度为16
+		if (bankCard != null && bankCard.length() != 16) {
+			//归 0 处理
+			String str = "****************";
+			return str;
+		}else if(bankCard == null){
+			return null;
+		}else {
+			String newBankCard = bankCard.substring(0,4)+"********"+bankCard.substring(12,16);
+			return newBankCard;
+		}
+
+
+	}
+
+
 }

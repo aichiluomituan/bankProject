@@ -40,4 +40,10 @@ public interface UserService {
 	void updateUserInfo(User user);
 
 
+	/**
+	 *  将查询到的卡号做隐私处理
+	 */
+	String privacyTreatment(String bankCard);
+
+
 }
