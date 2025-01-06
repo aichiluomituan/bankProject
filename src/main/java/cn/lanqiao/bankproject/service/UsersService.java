@@ -1,5 +1,6 @@
 package cn.lanqiao.bankproject.service;
 
+import cn.lanqiao.bankproject.entity.Edit.UsersEdit;
 import cn.lanqiao.bankproject.entity.query.UsersQuery;
 import cn.lanqiao.bankproject.entity.po.Users;
 import cn.lanqiao.bankproject.utils.PageHelper;
@@ -9,5 +10,5 @@ import java.util.List;
 
 public interface UsersService {
     PageHelper<Users> selectUsersList(String status, String username, int pageNum, int pageSize);
-    int updatestatus(@Param("id") Long id,@Param("status") String status);
+    int update(UsersEdit usersEdit);
 }

@@ -1,5 +1,6 @@
 package cn.lanqiao.bankproject.controller;
 
+import cn.lanqiao.bankproject.entity.Edit.UsersEdit;
 import cn.lanqiao.bankproject.entity.query.PageHelperQuery;
 import cn.lanqiao.bankproject.service.UsersService;
 import cn.lanqiao.bankproject.utils.ResponseUtils;
@@ -41,13 +42,18 @@ public class UsersController {
             return new ResponseUtils<>(500, "查询失败: " + e.getMessage(), null);
         }
     }
-    @RequestMapping("/updateUserStatus")
-    public ResponseUtils updateUserStatus(@RequestBody Users user) {
+    @RequestMapping("/update")
+    public ResponseUtils update(@RequestBody UsersEdit usersEdit) {
         try {
-            int updatestatus = usersService.updatestatus(user.getId(), String.valueOf(user.getStatus()));
-            return new ResponseUtils<>(200, "更新状态成功", null);
+            int update = usersService.update(usersEdit);
+            if(update==1){
+                return  new ResponseUtils(200,"修改成功");
+            }else{
+                return  new ResponseUtils(300,"修改失败");
+            }
         } catch (Exception e) {
-            return new ResponseUtils<>(500, "更新状态失败: " + e.getMessage(), null);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

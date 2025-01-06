@@ -1,6 +1,7 @@
 package cn.lanqiao.bankproject.mappers;
 
 
+import cn.lanqiao.bankproject.entity.Edit.UsersEdit;
 import cn.lanqiao.bankproject.entity.po.Users;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +17,9 @@ public interface UsersMapper {
     @Select("select COUNT(*) from user")
     int totalNum();
     List<Users> selectUsersList(@Param("status") String status,@Param("username") String username,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("offset")int offset);
-    //修改锁定
-    @Update( "update users set status = #{status} WHERE id = #{id}")
-    int updatestatus(@Param("id") Long id,@Param("status") String status);
+    // //修改锁定
+    //编辑用户信息
+    @Update(" update user set username=#{username},bank_card=#{bank_card},phone=#{phone},address=#{address} where  id=#{id} ")
+    int update(UsersEdit usersEdit);
+
 }

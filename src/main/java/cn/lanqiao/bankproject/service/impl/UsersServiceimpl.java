@@ -1,5 +1,6 @@
 package cn.lanqiao.bankproject.service.impl;
 
+import cn.lanqiao.bankproject.entity.Edit.UsersEdit;
 import cn.lanqiao.bankproject.mappers.UsersMapper;
 import cn.lanqiao.bankproject.service.UsersService;
 import cn.lanqiao.bankproject.entity.query.UsersQuery;
@@ -30,13 +31,13 @@ public class UsersServiceimpl implements UsersService {
         return pageHelper;
     }
 
+
     @Override
-    public int updatestatus(Long id, String status) {
-        int result = usersMapper.updatestatus(id, status);
-        if(result>0){
+    public int update(UsersEdit usersEdit) {
+        int update = usersMapper.update(usersEdit);
+        if(update>0){
             return 1;
-        }else{
-            return 0;
         }
+        return 0;
     }
-}
+    }
