@@ -4,6 +4,8 @@ package cn.lanqiao.bankproject.service;/*
 @Description 
 */
 import cn.lanqiao.bankproject.entity.po.User;
+import org.apache.ibatis.annotations.Update;
+import org.springframework.data.repository.query.Param;
 
 public interface AccountService {
 
@@ -26,5 +28,7 @@ public interface AccountService {
      * 根据用户名获取银行卡号
      */
     String getBankCardByUsername(String username);
+    // 修改银行卡账号
+    void updateBankCard(String currentUsername, String bankCard);
 
 }

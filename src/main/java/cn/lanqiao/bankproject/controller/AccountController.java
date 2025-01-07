@@ -89,4 +89,21 @@ public class AccountController {
                     .body(Map.of("code", 500, "msg", e.getMessage()));
         }
     }
+    @PostMapping("/updateBankCard")
+    public ResponseEntity<String> updateBankCard(@RequestParam String currentUsername, @RequestParam String bankCard) {
+        try {
+            // 检查银行卡号是否为空或无效
+            if (bankCard == null || bankCard.trim().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("银行卡号不能为空");
+            }
+
+            // 如果银行卡号有效，进行更新操作
+            accountService.updateBankCard(currentUsername, bankCard);
+            // 3. 如果更新成功，返回200 OK和成功消息
+            return ResponseEntity.status(HttpStatus.OK).body("银行卡号更新成功");
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

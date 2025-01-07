@@ -48,13 +48,17 @@
                 <span>银行卡账号</span>
                 <button class="button" onclick="getBankCardByUsername()">查看</button>
             </div>
+            <div class="security-item">
+                <span>银行卡账号</span>
+                <button class="button" onclick="updateBankCardByUsername()">修改</button>
+            </div>
         </div>
     </div>
 </div>
 </body>
 </html>
 <!-- 添加 axios -->
-<script src="../static/js/axios.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
     // 配置axios
     axios.defaults.baseURL = 'http://localhost:8080';
@@ -190,4 +194,48 @@
             alert('获取银行卡号失败: ' + (error.response?.data?.msg || '未知错误'));
         }
     }
+    function validateBankCard(bankCard) {
+        const bankCardRegex = /^\d{16,20}$/; // 假设银行卡号长度在16到20位之间
+        return bankCardRegex.test(bankCard);
+    }
+
+    async function updateBankCardByUsername() {
+        try {
+            const username = localStorage.getItem('username');
+            if (!username) {
+                alert('用户名不能为空');
+                return;
+            }
+
+            const bankCard = prompt('请输入新的银行卡号：');
+
+            // 检查银行卡号是否为空
+            if (!bankCard || !bankCard.trim()) {
+                alert('银行卡号不能为空');
+                return;
+            }
+
+            // 校验银行卡号格式（假设有一个函数 validateBankCard 用于校验格式）
+            if (!validateBankCard(bankCard)) {
+                alert('请输入有效的银行卡号，长度应为16到20位');
+                return;
+            }
+
+            // 发送请求到后端
+            const response = await axios.post('/account/updateBankCard', null, {
+                params: { currentUsername: username, bankCard: bankCard }
+            });
+
+            // 检查返回状态码
+            if (response.status === 200) {
+                alert('银行卡号更新成功');
+            } else {
+                alert(response.data || '更新失败');
+            }
+        } catch (error) {
+            console.error('更新银行卡号失败:', error);
+            alert('更新银行卡号失败: ' + (error.response?.data?.msg || '未知错误'));
+        }
+    }
+
 </script>

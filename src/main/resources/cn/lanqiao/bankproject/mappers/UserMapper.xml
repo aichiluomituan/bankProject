@@ -13,12 +13,12 @@
 		<result column="password" property="password"  />
 		<!--手机-->
 		<result column="phone" property="phone"  />
+		<!--银行卡号-->
+		<result column="bank_card" property="bankCard"  />
 		<!--电子邮箱-->
 		<result column="email" property="email"  />
 		<!--地址-->
 		<result column="address" property="address"  />
-		<!--银行卡号-->
-		<result column="bank_card" property="bankCard"  />
 	</resultMap>
 
 

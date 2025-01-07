@@ -89,4 +89,14 @@ public class AccountServiceImpl implements AccountService {
         log.info("获取银行卡号成功，username: {}, bankCard: {}", username, bankCard);
         return bankCard;
     }
+    @Transactional
+    public void updateBankCard(String currentUsername, String bankCard) {
+        // 更新银行卡号
+        int userUpdateResult = accountMapper.updateUserBankCard(currentUsername, bankCard);
+        // 打印userUpdateResult
+        System.out.println("userUpdateResult: " + userUpdateResult);
+        if (userUpdateResult != 1) {
+            throw new RuntimeException("更新用户表失败");
+        }
+    }
 }

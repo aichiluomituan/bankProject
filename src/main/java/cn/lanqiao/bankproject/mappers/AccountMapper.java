@@ -29,6 +29,7 @@ public interface AccountMapper {
     // 通过User表查询银行卡账号
     @Select("SELECT bank_card FROM user WHERE username = #{username}")
     String getBankCardByUsername(String username);
-
-
+    // 更新银行卡账号
+    @Update("UPDATE user SET bank_card = #{bankCard} WHERE username = #{currentUsername}")
+    int updateUserBankCard(@Param("currentUsername") String currentUsername, @Param("bankCard") String bankCard);
 }
