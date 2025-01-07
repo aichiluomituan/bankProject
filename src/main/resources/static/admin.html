@@ -45,7 +45,7 @@
 <!-- 侧边栏 -->
 <div class="sidebar">
     <div class="admin-info">
-        <img src="https://via.placeholder.com/80" alt="管理员头像" class="admin-avatar">
+<!--        <img src="https://via.placeholder.com/80" alt="管理员头像" class="admin-avatar">-->
         <h3>管理员</h3>
         <p>admin@bank.com</p>
     </div>
@@ -53,7 +53,7 @@
         <div class="menu-item active" onclick="switchContent('dashboard')">控制面板</div>
         <div class="menu-item" onclick="switchContent('users')">用户管理</div>
         <div class="menu-item" id="menuItem">交易监控</div>
-        <div class="menu-item" onclick="switchContent('settings')">系统设置</div>
+<!--        <div class="menu-item" onclick="switchContent('settings')">系统设置</div>-->
         <div class="menu-item" onclick="logout()">退出登录</div>
     </div>
 </div>
@@ -64,150 +64,66 @@
     <div id="dashboard-content">
         <iframe src="admin-dashboard.html" style="width: 100%; height: calc(100vh - 40px); border: none;"></iframe>
     </div>
-        <div class="header">
-            <h2>控制面板</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="搜索...">
-                <button class="button">搜索</button>
-            </div>
-        </div>
+<!--        <div class="header">-->
+<!--            <h2>控制面板</h2>-->
+<!--            <div class="search-bar">-->
+<!--                <input type="text" placeholder="搜索...">-->
+<!--                <button class="button">搜索</button>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <!-- 统计卡片 -->
-        <div class="dashboard-grid">
-            <div class="stat-card">
-                <h3>总用户数</h3>
-                <div class="stat-number">1,234</div>
-                <p>较上月增长 5%</p>
-            </div>
-            <div class="stat-card">
-                <h3>今日交易额</h3>
-                <div class="stat-number">¥1,567,890</div>
-                <p>较昨日增长 12%</p>
-            </div>
-            <div class="stat-card">
-                <h3>活跃用户</h3>
-                <div class="stat-number">789</div>
-                <p>较上周增长 8%</p>
-            </div>
-        </div>
+<!--        &lt;!&ndash; 统计卡片 &ndash;&gt;-->
+<!--        <div class="dashboard-grid">-->
+<!--            <div class="stat-card">-->
+<!--                <h3>总用户数</h3>-->
+<!--                <div class="stat-number">1,234</div>-->
+<!--                <p>较上月增长 5%</p>-->
+<!--            </div>-->
+<!--            <div class="stat-card">-->
+<!--                <h3>今日交易额</h3>-->
+<!--                <div class="stat-number">¥1,567,890</div>-->
+<!--                <p>较昨日增长 12%</p>-->
+<!--            </div>-->
+<!--            <div class="stat-card">-->
+<!--                <h3>活跃用户</h3>-->
+<!--                <div class="stat-number">789</div>-->
+<!--                <p>较上周增长 8%</p>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <!-- 用户列表 -->
-        <div class="data-table">
-            <h3>最近用户</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>用户ID</th>
-                    <th>姓名</th>
-                    <th>账户号码</th>
-                    <th>注册时间</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>张三</td>
-                    <td>6225 **** **** 8888</td>
-                    <td>2024-01-20</td>
-                    <td><span class="status-badge status-active">正常</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-button edit-button">编辑</button>
-                            <button class="action-button delete-button">锁定</button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- 更多用户数据... -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!--    &lt;!&ndash; 用户管理内容 &ndash;&gt;-->
-    <!--    <div id="users-content" style="display: none;">-->
-    <!--        <div class="header">-->
-    <!--            <h2>用户管理</h2>-->
-    <!--            <div class="search-bar">-->
-    <!--                <input type="text" placeholder="搜索用户...">-->
-    <!--                <button class="button">搜索</button>-->
-    <!--                <button class="button" style="background-color: #4caf50;" onclick="showAddUserModal()">-->
-    <!--                    添加用户-->
-    <!--                </button>-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--        <div class="filter-section" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px;">-->
-    <!--            <div style="display: flex; gap: 15px;">-->
-    <!--                <div>-->
-    <!--                    <label>账户状态：</label>-->
-    <!--                    <select id="statusFilter" style="padding: 5px;">-->
-    <!--                        <option value="all">全部</option>-->
-    <!--                        <option value="active">正常</option>-->
-    <!--                        <option value="locked">锁定</option>-->
-    <!--                    </select>-->
-    <!--                </div>-->
-    <!--                <div>-->
-    <!--                    <label>注册时间：</label>-->
-    <!--                    <input type="date" style="padding: 5px;">-->
-    <!--                    <span>至</span>-->
-    <!--                    <input type="date" style="padding: 5px;">-->
-    <!--                </div>-->
-    <!--                <button class="button" style="height: 30px;">筛选</button>-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--        <div class="data-table">-->
-    <!--            <table>-->
-    <!--                <thead>-->
-    <!--                <tr>-->
-    <!--                    <th><input type="checkbox" onclick="toggleAllUsers(this)"> 全选</th>-->
-    <!--                    <th>用户ID</th>-->
-    <!--                    <th>姓名</th>-->
-    <!--                    <th>账户号码</th>-->
-    <!--                    <th>手机号码</th>-->
-    <!--                    <th>注册时间</th>-->
-    <!--                    <th>账户余额</th>-->
-    <!--                    <th>状态</th>-->
-    <!--                    <th>操作</th>-->
-    <!--                </tr>-->
-    <!--                </thead>-->
-    <!--                <tbody>-->
-    <!--                <tr>-->
-    <!--                    <td><input type="checkbox" name="userSelect"></td>-->
-    <!--                    <td>001</td>-->
-    <!--                    <td>张三</td>-->
-    <!--                    <td>6225 **** **** 8888</td>-->
-    <!--                    <td>138****8888</td>-->
-    <!--                    <td>2024-01-20</td>-->
-    <!--                    <td>¥10,000.00</td>-->
-    <!--                    <td><span class="status-badge status-active">正常</span></td>-->
-    <!--                    <td>-->
-    <!--                        <div class="action-buttons">-->
-    <!--                            <button class="action-button edit-button" onclick="editUser('001')">编辑</button>-->
-    <!--                            <button class="action-button" style="background-color: #e3f2fd; color: #1e88e5;">-->
-    <!--                                重置密码-->
-    <!--                            </button>-->
-    <!--                            <button class="action-button delete-button">锁定</button>-->
-    <!--                        </div>-->
-    <!--                    </td>-->
-    <!--                </tr>-->
-    <!--                &lt;!&ndash; 可以添加更多用户数据 &ndash;&gt;-->
-    <!--                </tbody>-->
-    <!--            </table>-->
-
-    <!--            &lt;!&ndash; 分页控件 &ndash;&gt;-->
-    <!--            <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">-->
-    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">上一页</button>-->
-    <!--                <button class="button" style="background-color: #1e88e5;">1</button>-->
-    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">2</button>-->
-    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">3</button>-->
-    <!--                <button class="button" style="background-color: #f5f5f5; color: #333;">下一页</button>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!-- ... 其他代码保持不变 ... -->
+<!--        &lt;!&ndash; 用户列表 &ndash;&gt;-->
+<!--        <div class="data-table">-->
+<!--            <h3>最近用户</h3>-->
+<!--            <table>-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>用户ID</th>-->
+<!--                    <th>姓名</th>-->
+<!--                    <th>账户号码</th>-->
+<!--                    <th>注册时间</th>-->
+<!--                    <th>状态</th>-->
+<!--                    <th>操作</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <td>001</td>-->
+<!--                    <td>张三</td>-->
+<!--                    <td>6225 **** **** 8888</td>-->
+<!--                    <td>2024-01-20</td>-->
+<!--                    <td><span class="status-badge status-active">正常</span></td>-->
+<!--                    <td>-->
+<!--                        <div class="action-buttons">-->
+<!--                            <button class="action-button edit-button">编辑</button>-->
+<!--                            <button class="action-button delete-button">锁定</button>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                &lt;!&ndash; 更多用户数据... &ndash;&gt;-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!-- 用户管理内容 -->
     <div id="users-content" style="display: none;">
@@ -225,25 +141,6 @@
                 <button class="button" id="selectLikeBtn">搜索</button>
             </div>
         </div>
-
-<!--        &lt;!&ndash; 交易统计卡片 &ndash;&gt;-->
-<!--        <div class="dashboard-grid">-->
-<!--            <div class="stat-card">-->
-<!--                <h3>今日交易总额</h3>-->
-<!--                <div class="stat-number">¥1,567,890</div>-->
-<!--                <p>较昨日 <span style="color: #4caf50;">+12%</span></p>-->
-<!--            </div>-->
-<!--            <div class="stat-card">-->
-<!--                <h3>交易笔数</h3>-->
-<!--                <div class="stat-number">3,456</div>-->
-<!--                <p>较昨日 <span style="color: #4caf50;">+8%</span></p>-->
-<!--            </div>-->
-<!--            <div class="stat-card">-->
-<!--                <h3>异常交易</h3>-->
-<!--                <div class="stat-number" style="color: #f44336;">23</div>-->
-<!--                <p>需要处理</p>-->
-<!--            </div>-->
-<!--        </div>-->
 
         <!-- 交易筛选 -->
         <div class="filter-section" style="margin-bottom: 20px; background: white; padding: 15px; border-radius: 5px;">
@@ -320,98 +217,98 @@
         </div>
     </div>
 
-    <!-- 系统设置内容 -->
+<!--     //系统设置内容-->
     <div id="settings-content" style="display: none;">
-        <div class="header">
-            <h2>系统设置</h2>
-        </div>
+<!--        <div class="header">-->
+<!--            <h2>系统设置</h2>-->
+<!--        </div>-->
 
-        <div class="settings-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-            <!-- 基本设置 -->
-            <div class="data-table">
-                <h3>基本设置</h3>
-                <div style="padding: 20px;">
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">系统名称</label>
-                        <input type="text" value="银行管理系统" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">系统Logo</label>
-                        <input type="file" accept="image/*">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">系统维护时间</label>
-                        <input type="time" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                        <span>至</span>
-                        <input type="time" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <button class="button">保存设置</button>
-                </div>
-            </div>
+<!--        <div class="settings-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">-->
+<!--            &lt;!&ndash; 基本设置 &ndash;&gt;-->
+<!--            <div class="data-table">-->
+<!--                <h3>基本设置</h3>-->
+<!--                <div style="padding: 20px;">-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">系统名称</label>-->
+<!--                        <input type="text" value="银行管理系统" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">系统Logo</label>-->
+<!--                        <input type="file" accept="image/*">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">系统维护时间</label>-->
+<!--                        <input type="time" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                        <span>至</span>-->
+<!--                        <input type="time" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <button class="button">保存设置</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <!-- 安全设置 -->
-            <div class="data-table">
-                <h3>安全设置</h3>
-                <div style="padding: 20px;">
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">密码有效期（天）</label>
-                        <input type="number" value="90" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">登录失败锁定次数</label>
-                        <input type="number" value="5" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">会话超时时间（分钟）</label>
-                        <input type="number" value="30" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <button class="button">保存设置</button>
-                </div>
-            </div>
+<!--            &lt;!&ndash; 安全设置 &ndash;&gt;-->
+<!--            <div class="data-table">-->
+<!--                <h3>安全设置</h3>-->
+<!--                <div style="padding: 20px;">-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">密码有效期（天）</label>-->
+<!--                        <input type="number" value="90" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">登录失败锁定次数</label>-->
+<!--                        <input type="number" value="5" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">会话超时时间（分钟）</label>-->
+<!--                        <input type="number" value="30" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <button class="button">保存设置</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <!-- 交易设置 -->
-            <div class="data-table">
-                <h3>交易设置</h3>
-                <div style="padding: 20px;">
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">单笔转账限额</label>
-                        <input type="number" value="50000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">每日提现限额</label>
-                        <input type="number" value="20000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">大额交易预警阈值</label>
-                        <input type="number" value="100000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <button class="button">保存设置</button>
-                </div>
-            </div>
+<!--            &lt;!&ndash; 交易设置 &ndash;&gt;-->
+<!--            <div class="data-table">-->
+<!--                <h3>交易设置</h3>-->
+<!--                <div style="padding: 20px;">-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">单笔转账限额</label>-->
+<!--                        <input type="number" value="50000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">每日提现限额</label>-->
+<!--                        <input type="number" value="20000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">大额交易预警阈值</label>-->
+<!--                        <input type="number" value="100000" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <button class="button">保存设置</button>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <!-- 通知设置 -->
-            <div class="data-table">
-                <h3>通知设置</h3>
-                <div style="padding: 20px;">
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">系统通知</label>
-                        <div style="margin-bottom: 10px;">
-                            <input type="checkbox" id="emailNotify" checked>
-                            <label for="emailNotify">邮件通知</label>
-                        </div>
-                        <div style="margin-bottom: 10px;">
-                            <input type="checkbox" id="smsNotify" checked>
-                            <label for="smsNotify">短信通知</label>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px;">通知邮箱</label>
-                        <input type="email" value="admin@bank.com" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
-                    </div>
-                    <button class="button">保存设置</button>
-                </div>
-            </div>
-        </div>
+<!--            &lt;!&ndash; 通知设置 &ndash;&gt;-->
+<!--            <div class="data-table">-->
+<!--                <h3>通知设置</h3>-->
+<!--                <div style="padding: 20px;">-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">系统通知</label>-->
+<!--                        <div style="margin-bottom: 10px;">-->
+<!--                            <input type="checkbox" id="emailNotify" checked>-->
+<!--                            <label for="emailNotify">邮件通知</label>-->
+<!--                        </div>-->
+<!--                        <div style="margin-bottom: 10px;">-->
+<!--                            <input type="checkbox" id="smsNotify" checked>-->
+<!--                            <label for="smsNotify">短信通知</label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group" style="margin-bottom: 20px;">-->
+<!--                        <label style="display: block; margin-bottom: 8px;">通知邮箱</label>-->
+<!--                        <input type="email" value="admin@bank.com" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">-->
+<!--                    </div>-->
+<!--                    <button class="button">保存设置</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 </body>
