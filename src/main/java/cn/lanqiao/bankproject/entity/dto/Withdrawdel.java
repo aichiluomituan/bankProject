@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Withdrawdel {
-    private String bank_card;
-    private Integer bank_balance;
+    private String bankCard;
+    private Integer bankBalance;
     private String trade_pwd;
+    private String payer;
 }

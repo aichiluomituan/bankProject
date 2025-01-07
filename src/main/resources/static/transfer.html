@@ -98,74 +98,13 @@
             if(result.data.code=='200'){
                 alert("转账成功")
                 // 添加转账记录到表格
-                addTransferRecord(bankcard, payee, money, '成功');
+                addTransferRecord(bankcard, payee, money, '处理中');
                 // 清空表单
                 document.querySelector('form').reset();
             }else{
                 alert("转账失败")
-            }})}
-    //     // 首先检查登录状态
-    //     if (!checkLoginStatus()) {
-    //         return;
-    //     }
-    //
-    //     // 获取表单数据
-    //     const bankcard = document.getElementById('bankcard').value;
-    //     const payee = document.getElementById('payee').value;
-    //     const money = document.getElementById('money').value;
-    //     const remark = document.getElementById('remark').value;
-    //     const fromCard = localStorage.getItem('userBankCard');
-    //     const userName = localStorage.getItem('userName');
-    //
-    //     // 打印调试信息
-    //     console.log('转账信息:', {
-    //         fromCard: fromCard,
-    //         toCard: bankcard,
-    //         payee: payee,
-    //         amount: money,
-    //         payer: userName
-    //     });
-    //
-    //     // 表单验证
-    //     if (!bankcard || !payee || !money) {
-    //         alert("请填写完整信息");
-    //         return;
-    //     }
-    //
-    //     if (parseFloat(money) <= 0) {
-    //         alert("转账金额必须大于0");
-    //         return;
-    //     }
-    //
-    //     // 构建请求数据
-    //     const transferData = {
-    //         bankcard: bankcard,
-    //         payee: payee,
-    //         money: parseFloat(money),
-    //         remark: remark || '',
-    //         payer: userName,
-    //         fromCard: fromCard  // 添加转出卡号到请求体
-    //     };
-    //
-    //     // 发送请求
-    //     axios({
-    //         url: '/money/transfer',
-    //         method: 'post',
-    //         data: transferData
-    //     }).then(response => {
-    //         console.log('转账响应:', response.data);
-    //         if (response.data.code === 200) {
-    //             alert("转账成功");
-    //             document.querySelector('form').reset();
-    //             // 可以添加刷新余额的逻辑
-    //         } else {
-    //             alert("转账失败：" + response.data.msg);
-    //         }
-    //     }).catch(error => {
-    //         console.error('转账错误:', error);
-    //         alert("转账失败：" + (error.response?.data?.msg || '系统错误'));
-    //     });
-    // }
-
+            }
+        })
+    }
 
 </script>

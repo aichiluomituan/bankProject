@@ -18,17 +18,6 @@
         <result column="status" property="status"/>
         <result column="bank_balance" property="bank_balance"/>
     </resultMap>
-<!--    <select id="totalNum" resultType="java.lang.Integer" resultMap="userresult">-->
-<!--        select COUNT(*) from user-->
-<!--        <where>-->
-<!--         <if test="status!=null and status!=''">-->
-<!--           and status=#{status}-->
-<!--         </if>-->
-<!--&lt;!&ndash;            <if test="username!=null and username!=''">&ndash;&gt;-->
-<!--&lt;!&ndash;                and username =#{username}&ndash;&gt;-->
-<!--&lt;!&ndash;            </if>&ndash;&gt;-->
-<!--        </where>-->
-<!--        </select>-->
     <select id="selectUsersList" resultType="cn.lanqiao.bankproject.entity.po.Users" resultMap="userresult">
         select u.* ,b.bank_balance from user u left join bank_info b on u.bank_card=b.bank_card
                 <where>
@@ -40,5 +29,8 @@
                     </if>
                 </where>
                 limit #{offset},#{pageSize}
+    </select>
+    <select id="bankcardbyname" resultType="java.lang.String">
+        select username from user where bank_card=#{bankcard};
     </select>
 </mapper>

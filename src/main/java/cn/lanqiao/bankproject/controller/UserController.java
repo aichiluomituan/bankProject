@@ -10,6 +10,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 /*@author 比巴卜
@@ -91,6 +92,11 @@ public class UserController{
 			}
 
 			User user = userService.login(loginDTO);
+			// 确保返回的用户数据包含必要信息
+			Map<String, Object> userData = new HashMap<>();
+			userData.put("username", user.getUsername());
+			userData.put("bank_card", user.getBankCard());
+			// ... 其他需要的用户信息
 			return ResponseUtils.success("登录成功", user);
 
 		} catch (Exception e) {

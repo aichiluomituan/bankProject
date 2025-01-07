@@ -12,35 +12,31 @@ import org.apache.ibatis.annotations.Update;
 public interface MoneyMapper {
     //转账
     // @Insert("Insert into transfer_record  values (null,#{toaccount},#{toname},#{amount},#{notes},'转账')")
-    @Insert("Insert into trade  values (null,now(),#{payee},#{bankcard},#{money},'成功',#{remark},'转账','张三')")
+    @Insert("Insert into trade  values (null,now(),#{payee},#{bankcard},#{money},'处理中',#{remark},'转账','张三')")
     int Tranfertopeople(TranferAdd tranferAdd);
     // 扣除转出方余额
     // @Update("UPDATE bank_info SET bank_balance = bank_balance - #{money} WHERE bank_card = #{fromCard} AND bank_balance >= #{money}")
     // int deductBalance(@Param("payer") String fromCard, @Param("money") double money);
-    // 增加接收方余额
-    // @Update("UPDATE bank_info SET bank_balance = bank_balance + #{money} WHERE bank_card = #{bankcard}")
-    // int increaseBalance(@Param("bankcard") String bankcard, @Param("money") double money);
-    //
-    // // 查询账户余额
-    // @Select("SELECT COUNT(*) FROM bank_info WHERE bank_card = #{bankcard}")
-    // int checkAccountExists(@Param("bankcard") String bankcard);
-    //
-    // @Select("SELECT bank_balance FROM bank_info WHERE bank_card = #{bankcard}")
-    // Double getBalance(@Param("bankcard") String bankcard);
-
-    //充值
-    @Update("UPDATE bank_info SET bank_balance = bank_balance + #{bank_balance} WHERE bank_card = #{bank_card}")
+    //增加接收方余额
+    @Update("UPDATE bank_info SET bank_balance = bank_balance + #{money} WHERE bank_card = #{bankcard}")
+    int increaseBalance(TranferAdd tranferAdd);
+    //存款
+    @Update("UPDATE bank_info SET bank_balance = bank_balance + #{bankBalance} WHERE bank_card = #{bankCard}")
     int UpdateBalance(RechargeAdd rechargeAdd);
-    //提现
-    @Update("UPDATE bank_info SET bank_balance = bank_balance - #{bank_balance} WHERE bank_card = #{bank_card}")
+    //取款
+    @Update("UPDATE bank_info SET bank_balance = bank_balance - #{bankBalance} WHERE bank_card = #{bankCard}")
     int UpdateBalancedown(Withdrawdel withdrawdel);
     //判定密码
     @Select("SELECT trade_pwd FROM bank_info WHERE bank_card = #{bank_card}")
     String checkTradePwd(String bank_card);
-    //插入记录
-    @Insert("Insert into trade  values (null,now(),'xixi',#{bankcard},#{money},'成功','账户充值','存款','王五')")
+    //插入存款记录
     int insertTradeRecord(RechargeAdd rechargeAdd);
     //查询姓名
     @Select("SELECT username FROM user WHERE bank_card = #{bankcard}")
     String getUsernameByBankCard(@Param("bankcard") String bankcard);
+    //插入取款记录
+    int insertTradeRecordwithdraw(Withdrawdel withdrawdel);
+    //查询
+    @Select("SELECT username FROM user WHERE bank_card = #{bankcard}")
+    String getUsernameByBankCardtwo(@Param("bankcard") String bankcard);
 }

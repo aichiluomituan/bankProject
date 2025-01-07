@@ -23,20 +23,9 @@ public class MoneyController {
     //转账功能
     @RequestMapping("/transfer")
     public ResponseUtils<TranferAdd> transfer(@RequestBody TranferAdd tranferAdd) {
-        // return moneyService.Tranfertopeople(tranferAdd, fromCard);
-        // 参数验证
-        //     if (fromCard == null || fromCard.trim().isEmpty()) {
-        //         return new ResponseUtils<>(404, "转出账号不能为空");
-        //     }
-        //     try {
-        //         return moneyService.Tranfertopeople(tranferAdd, fromCard);
-        //     } catch (Exception e) {
-        //         log.error("转账处理异常", e);
-        //         return new ResponseUtils<>(500, "转账失败：" + e.getMessage());
-        //     }
-        // }
         int tranfertopeople = moneyService.Tranfertopeople(tranferAdd);
-        if (tranfertopeople == 1) {
+        int increaseBalance = moneyService.increaseBalance(tranferAdd);
+        if (tranfertopeople == 1 && increaseBalance == 1) {
             //转账成功
             return new ResponseUtils<TranferAdd>(200, "转账成功");
         } else {
@@ -44,24 +33,27 @@ public class MoneyController {
             return new ResponseUtils<TranferAdd>(404, "转账失败");
         }
     }
-    //充值功能
+    //存款功能
     @RequestMapping("/recharge")
     public  ResponseUtils<RechargeAdd> recharge(@RequestBody RechargeAdd rechargeAdd) {
+        System.out.println("controller:"+rechargeAdd);
         int rechargemoney = moneyService.UpdateBalance(rechargeAdd);
-        if(rechargemoney==1){
+        int instertrecharge = moneyService.Instertrecharge(rechargeAdd);
+        if(rechargemoney==1 && instertrecharge==1){
             //转账成功
-            return new ResponseUtils<RechargeAdd>(200,"充值成功");
+            return new ResponseUtils<>(200,"充值成功");
         }else{
             //转账失败
-            return new ResponseUtils<RechargeAdd>(404,"充值失败");
+            return new ResponseUtils<>(404,"充值失败");
         }
     }
 
-    //提现功能
+    //取款功能
     @RequestMapping("/withdraw")
     public ResponseUtils<Withdrawdel> withdraw(@RequestBody Withdrawdel withdrawdel) {
         int withdrawmoney = moneyService.UpdateBalancedown(withdrawdel);
-        if(withdrawmoney == 1){
+        int insertTradeRecordwithdraw = moneyService.insertTradeRecordwithdraw(withdrawdel);
+        if(withdrawmoney == 1 && insertTradeRecordwithdraw==1){
             return new ResponseUtils<Withdrawdel>(200,"提现成功");
         } else if(withdrawmoney == -1) {
             return new ResponseUtils<Withdrawdel>(404,"支付密码错误");
