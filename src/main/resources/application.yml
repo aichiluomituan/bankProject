@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 spring:
   datasource:
     username: root
@@ -11,7 +11,7 @@ spring:
     default-timeout: 30
   data:
     redis:
-      host: 192.168.88.130
+      host: 192.168.88.128
       port: 6379
       lettuce:
         pool:
