@@ -62,68 +62,9 @@
 <div class="main-content">
     <!-- 控制面板内容 -->
     <div id="dashboard-content">
-        <iframe src="admin-dashboard.html" style="width: 100%; height: calc(100vh - 40px); border: none;"></iframe>
+        <iframe src="admin-dashboard.html"></iframe>
     </div>
-        <div class="header">
-            <h2>控制面板</h2>
-            <div class="search-bar">
-                <input type="text" placeholder="搜索...">
-                <button class="button">搜索</button>
-            </div>
-        </div>
 
-        <!-- 统计卡片 -->
-        <div class="dashboard-grid">
-            <div class="stat-card">
-                <h3>总用户数</h3>
-                <div class="stat-number">1,234</div>
-                <p>较上月增长 5%</p>
-            </div>
-            <div class="stat-card">
-                <h3>今日交易额</h3>
-                <div class="stat-number">¥1,567,890</div>
-                <p>较昨日增长 12%</p>
-            </div>
-            <div class="stat-card">
-                <h3>活跃用户</h3>
-                <div class="stat-number">789</div>
-                <p>较上周增长 8%</p>
-            </div>
-        </div>
-
-        <!-- 用户列表 -->
-        <div class="data-table">
-            <h3>最近用户</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>用户ID</th>
-                    <th>姓名</th>
-                    <th>账户号码</th>
-                    <th>注册时间</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>张三</td>
-                    <td>6225 **** **** 8888</td>
-                    <td>2024-01-20</td>
-                    <td><span class="status-badge status-active">正常</span></td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-button edit-button">编辑</button>
-                            <button class="action-button delete-button">锁定</button>
-                        </div>
-                    </td>
-                </tr>
-                <!-- 更多用户数据... -->
-                </tbody>
-            </table>
-        </div>
-    </div>
 
     <!--    &lt;!&ndash; 用户管理内容 &ndash;&gt;-->
     <!--    <div id="users-content" style="display: none;">-->
@@ -414,6 +355,7 @@
         </div>
     </div>
 </div>
+
 </body>
 <script src="js/axios.min.js"></script>
 <script>
