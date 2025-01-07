@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>充值 - 银行管理系统</title>
+    <title>存款 - 银行管理系统</title>
     <style>
         * {
             margin: 0;
@@ -108,7 +108,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>账户充值</h1>
+        <h1>账户存款</h1>
     </div>
     <div class="recharge-form">
         <div class="form-group">
@@ -116,7 +116,7 @@
             <input type="text" id="bankcard">
         </div>
         <div class="form-group">
-            <label>充值金额</label>
+            <label>存款金额</label>
             <div class="amount-options">
                 <div class="amount-option" data-amount="100">¥100</div>
                 <div class="amount-option" data-amount="200">¥200</div>
@@ -127,7 +127,7 @@
             </div>
             <input type="number" id="customAmount" placeholder="输入其他金额">
         </div>
-        <button class="button" onclick="handleRecharge()">确认充值</button>
+        <button class="button" onclick="handleRecharge()">确认存款</button>
         <button class="button back-button" onclick="window.location.href='index.html'">返回首页</button>
     </div>
 </div>
@@ -148,7 +148,7 @@
         });
     });
 
-    //处理充值
+    //处理存款
     function handleRecharge() {
         const bankCard = document.getElementById("bankcard").value;
         const amount = parseFloat(customAmountInput.value);
@@ -160,34 +160,34 @@
         }
 
         if (!amount || amount <= 0) {
-            alert('请输入有效的充值金额！');
+            alert('请输入有效的存款金额！');
             return;
         }
 
         // 构建请求数据
         const rechargeData = {
-            bank_card: bankCard,
-            bank_balance: amount
+            bankCard: bankCard,
+            bankBalance: amount
         };
 
-        console.log('充值请求数据:', rechargeData);
+        console.log('存款请求数据:', rechargeData);
 
-        // 发送充值请求
+        // 发送存款请求
         axios({
-            url: '/money/recharge',
+            url: 'http://localhost:8080/money/recharge',
             method: 'post',
             data: rechargeData
         }).then(response => {
-            console.log('充值响应:', response.data);
+            console.log('存款响应:', response.data);
             if (response.data.code === 200) {
-                alert("充值成功");
+                alert("存款成功");
                 window.location.href = 'index.html';
             } else {
-                alert("充值失败：" + (response.data.msg || "未知错误"));
+                alert("存款失败：" + (response.data.msg || "未知错误"));
             }
         }).catch(error => {
-            console.error('充值错误:', error);
-            alert("充值失败：" + (error.response?.data?.msg || '系统错误'));
+            console.error('存款错误:', error);
+            alert("存款失败：" + (error.response?.data?.msg || '系统错误'));
         });
     }
 </script>

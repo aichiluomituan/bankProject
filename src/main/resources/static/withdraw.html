@@ -121,16 +121,16 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>账户提现</h1>
+        <h1>账户取款</h1>
     </div>
     <div class="withdraw-form">
-        <div class="balance-info">
-            <h3>当前可用余额：¥100,000.00</h3>
-            <p>单笔提现限额：¥50,000.00</p>
-        </div>
+<!--        <div class="balance-info">-->
+<!--            <h3>当前可用余额：¥100,000.00</h3>-->
+<!--            <p>单笔提现限额：¥50,000.00</p>-->
+<!--        </div>-->
 
         <div class="form-group">
-            <label>提现账户</label>
+            <label>取款账户</label>
 <!--            readonly-->
             <input type="text" id="withdraw">
         </div>
@@ -145,7 +145,7 @@
 <!--        </div>-->
 
         <div class="form-group">
-            <label>提现金额</label>
+            <label>取款金额</label>
             <div class="amount-options">
                 <div class="amount-option" data-amount="100">¥100</div>
                 <div class="amount-option" data-amount="500">¥500</div>
@@ -155,7 +155,7 @@
                 <div class="amount-option" data-amount="10000">¥10000</div>
             </div>
             <input type="number" id="customAmount" placeholder="输入其他金额">
-            <p class="warning">注：提现金额必须为整数，最低100元</p>
+            <p class="warning">注：取款金额必须为整数，最低100元</p>
         </div>
 
         <div class="form-group">
@@ -163,7 +163,7 @@
             <input type="password" placeholder="请输入支付密码" id="password">
         </div>
 
-        <button class="button" onclick="handleWithdraw()">确认提现</button>
+        <button class="button" onclick="handleWithdraw()">确认取款</button>
         <button class="button back-button" onclick="window.location.href='index.html'">返回首页</button>
     </div>
 </div>
@@ -185,7 +185,7 @@
         });
     });
 
-    // 处理提现
+    // 处理取款
     function handleWithdraw() {
             const amount = Number(customAmountInput.value);
             const bankCard = withdraw.value;        // 获取银行卡号
@@ -195,14 +195,14 @@
             alert('请输入支付密码！');
             return;
             }
-            // 验证提现金额
+            // 验证取款金额
             if (!amount || amount < 100) {
-                alert('提现金额必须大于等于100元！');
+                alert('取款金额必须大于等于100元！');
                 return;
             }
 
             if (amount > 50000) {
-                alert('超出单笔提现限额！');
+                alert('超出单笔取款限额！');
                 return;
             }
 
@@ -213,35 +213,32 @@
 
             // 验证金额是否为整数
             if (amount % 1 !== 0) {
-                alert('提现金额必须为整数！');
+                alert('取款金额必须为整数！');
                 return;
             }
-
-            // 这里添加实际的提现处理逻辑
-            alert(`确认提现 ¥${amount} 元`);
             // 提现成功后可以跳转回首页
             // window.location.href = 'index.html';
             axios({
                 url: 'http://localhost:8080/money/withdraw',
                 method: 'post',
                 data: {
-                    bank_card: bankCard,
-                    bank_balance: amount,
+                    bankCard: bankCard,
+                    bankBalance: amount,
                     trade_pwd: tradePwd    // 使用获取到的密码值
                 }
             }).then((result) => {
                 if(result.data.code == '200'){
-                    alert("提现成功");
+                    alert("取款成功");
                     window.location.href = 'index.html';
                 } else if(result.data.code == '404' && result.data.msg.includes("密码错误")) {
                     alert("支付密码错误，请重试");
                     password.value = ''; // 清空密码输入框
                 } else {
-                    alert("提现失败：" + (result.data.msg || '未知错误'));
+                    alert("取款失败：" + (result.data.msg || '未知错误'));
                 }
             }).catch(error => {
-                console.error('提现错误详情:', error);
-                alert("提现请求失败：" + (error.response?.data?.msg || error.message || '未知错误'));
+                console.error('取款错误详情:', error);
+                alert("取款请求失败：" + (error.response?.data?.msg || error.message || '未知错误'));
             });
     }
 </script>
