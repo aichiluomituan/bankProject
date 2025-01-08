@@ -39,4 +39,5 @@ public interface MoneyMapper {
     //查询
     @Select("SELECT username FROM user WHERE bank_card = #{bankcard}")
     String getUsernameByBankCardtwo(@Param("bankcard") String bankcard);
+
 }

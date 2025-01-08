@@ -23,4 +23,5 @@ public interface MoneyService {
     int Instertrecharge(RechargeAdd rechargeAdd);
     //插入取款记录
     int insertTradeRecordwithdraw(Withdrawdel withdrawdel);
+
 }
