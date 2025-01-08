@@ -218,6 +218,13 @@
     .cancel-button:hover {
       background-color: #da190b;
     }
+    a {
+      text-decoration: none; /* 去除下划线 */
+      color: black; /* 更改颜色，用你想要的颜色代码替换 #your-color-code */
+    }
+    span{
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -273,16 +280,16 @@
         <a href="javascript:void(0)" onclick="changePage(currentPage-1)" class="right-font08">上一页</a> |
         <a href="javascript:void(0)" onclick="changePage(currentPage+1)" class="right-font08">下一页</a> |
         <a href="javascript:void(0)" onclick="changePage(totalPages)" class="right-font08">末页</a>]
-<!--        转至：-->
+        <!--        转至：-->
       </td>
-<!--      <td width="1%">-->
-<!--        <table width="20" border="0" cellspacing="0" cellpadding="0">-->
-<!--          <tr>-->
-<!--            <td width="1%"><input name="pageNum" type="text" class="right-textfield03" size="1" id="whitebutton"/></td>-->
-<!--            <td width="87%"><input name="Submit23222" type="button" class="right-button06" value=" " onclick="goToPage()" /></td>-->
-<!--          </tr>-->
-<!--        </table>-->
-<!--      </td>-->
+      <!--      <td width="1%">-->
+      <!--        <table width="20" border="0" cellspacing="0" cellpadding="0">-->
+      <!--          <tr>-->
+      <!--            <td width="1%"><input name="pageNum" type="text" class="right-textfield03" size="1" id="whitebutton"/></td>-->
+      <!--            <td width="87%"><input name="Submit23222" type="button" class="right-button06" value=" " onclick="goToPage()" /></td>-->
+      <!--          </tr>-->
+      <!--        </table>-->
+      <!--      </td>-->
     </tr>
   </table>
   <!-- 添加模态框 HTML -->
@@ -322,32 +329,32 @@
 
   <script src="js/axios.min.js"></script>
 
-    <script>
-      // 切换用户状态（锁定/解锁）
-      function toggleUserStatus(userId, currentStatus) {
-        // 将currentStatus转换为字符串进行比较
-        const status = String(currentStatus);
-        // 如果当前是锁定状态(1)，则解锁为0；如果是正常状态(0)，则锁定为1
-        const newStatus = status === '1' ? '0' : '1';
-        const action = status === '1' ? '解锁' : '锁定';
+  <script>
+    // 切换用户状态（锁定/解锁）
+    function toggleUserStatus(userId, currentStatus) {
+      // 将currentStatus转换为字符串进行比较
+      const status = String(currentStatus);
+      // 如果当前是锁定状态(1)，则解锁为0；如果是正常状态(0)，则锁定为1
+      const newStatus = status === '1' ? '0' : '1';
+      const action = status === '1' ? '解锁' : '锁定';
 
-        if (confirm(`确定要${action}该用户吗？`)) {
-          axios.post('/Users/updateStatus', {
-            id: userId,
-            status: newStatus
-          }).then(response => {
-            if (response.data.code === 200) {
-              // 更新成功后刷新表格数据
-              loadUserData(currentPage);
-            } else {
-              alert(`${action}失败：` + response.data.msg);
-            }
-          }).catch(error => {
-            console.error(`${action}用户错误:`, error);
-            alert(`${action}失败`);
-          });
-        }
+      if (confirm(`确定要${action}该用户吗？`)) {
+        axios.post('/Users/updateStatus', {
+          id: userId,
+          status: newStatus
+        }).then(response => {
+          if (response.data.code === 200) {
+            // 更新成功后刷新表格数据
+            loadUserData(currentPage);
+          } else {
+            alert(`${action}失败：` + response.data.msg);
+          }
+        }).catch(error => {
+          console.error(`${action}用户错误:`, error);
+          alert(`${action}失败`);
+        });
       }
+    }
     // 定义分页相关变量
     let currentPage = 1;
     let totalPages = 0;
@@ -520,113 +527,113 @@
         loadUserData(1);
       });
     };
-      // 添加基础的模态框显示/隐藏功能
-      // 修改编辑用户函数
-      function editUser(user) {
-        // 显示模态框
-        const modal = document.getElementById('editModal');
-        modal.style.display = 'block';
+    // 添加基础的模态框显示/隐藏功能
+    // 修改编辑用户函数
+    function editUser(user) {
+      // 显示模态框
+      const modal = document.getElementById('editModal');
+      modal.style.display = 'block';
 
-        // 填充表单数据
-        document.getElementById('editUserId').value = user.id;
-        document.getElementById('editUsername').value = user.username ;
-        document.getElementById('editBankcard').value = user.bankcard;
-        document.getElementById('editPhone').value = user.phone;
-        document.getElementById('editAddress').value = user.address;
+      // 填充表单数据
+      document.getElementById('editUserId').value = user.id;
+      document.getElementById('editUsername').value = user.username ;
+      document.getElementById('editBankcard').value = user.bankcard;
+      document.getElementById('editPhone').value = user.phone;
+      document.getElementById('editAddress').value = user.address;
 
-        console.log('正在编辑用户:', user);
+      console.log('正在编辑用户:', user);
+    }
+
+    // 处理表单提交
+    document.querySelector('.save-button').onclick = function() {
+      if (!validateForm()) {
+        return;
       }
 
-      // 处理表单提交
-      document.querySelector('.save-button').onclick = function() {
-        if (!validateForm()) {
-          return;
-        }
+      const userData = {
+        id: document.getElementById('editUserId').value,
+        username: document.getElementById('editUsername').value,
+        bank_card: document.getElementById('editBankcard').value,
+        phone: document.getElementById('editPhone').value,
+        address: document.getElementById('editAddress').value
+      };
 
-        const userData = {
-          id: document.getElementById('editUserId').value,
-          username: document.getElementById('editUsername').value,
-          bank_card: document.getElementById('editBankcard').value,
-          phone: document.getElementById('editPhone').value,
-          address: document.getElementById('editAddress').value
-        };
+      // 发送更新请求
+      axios({
+        url: 'http://localhost:8080/Users/update',
+        method: 'post',
+        data: userData
+      })
+              .then(response => {
+                if (response.data.code === 200) {
+                  alert('修改成功');
+                  closeModal();
+                  // 刷新当前页数据
+                  loadUserData(currentPage);
+                } else {
+                  alert('修改失败：' + response.data.msg);
+                }
+              })
+              .catch(error => {
+                console.error('更新用户错误:', error);
+                alert('修改失败：' + (error.response?.data?.msg || '系统错误'));
+              });
+    }
+    // 表单验证函数
+    function validateForm() {
+      const username = document.getElementById('editUsername').value;
+      const bankcard = document.getElementById('editBankcard').value;
+      const phone = document.getElementById('editPhone').value;
 
-        // 发送更新请求
-        axios({
-          url: 'http://localhost:8080/Users/update',
-          method: 'post',
-          data: userData
-        })
-                .then(response => {
-                  if (response.data.code === 200) {
-                    alert('修改成功');
-                    closeModal();
-                    // 刷新当前页数据
-                    loadUserData(currentPage);
-                  } else {
-                    alert('修改失败：' + response.data.msg);
-                  }
-                })
-                .catch(error => {
-                  console.error('更新用户错误:', error);
-                  alert('修改失败：' + (error.response?.data?.msg || '系统错误'));
-                });
-      }
-      // 表单验证函数
-      function validateForm() {
-        const username = document.getElementById('editUsername').value;
-        const bankcard = document.getElementById('editBankcard').value;
-        const phone = document.getElementById('editPhone').value;
-
-        if (!username.trim()) {
-          alert('请输入姓名');
-          return false;
-        }
-
-        if (!bankcard.trim()) {
-          alert('请输入账户号码');
-          return false;
-        }
-
-        if (!phone.trim()) {
-          alert('请输入手机号码');
-          return false;
-        }
-
-        // 手机号码格式验证
-        if (!/^1[3-9]\d{9}$/.test(phone)) {
-          alert('请输入正确的手机号码');
-          return false;
-        }
-
-        return true;
+      if (!username.trim()) {
+        alert('请输入姓名');
+        return false;
       }
 
-      // 关闭模态框函数
-      function closeModal() {
-        const modal = document.getElementById('editModal');
-        const form = document.getElementById('editUserForm');
+      if (!bankcard.trim()) {
+        alert('请输入账户号码');
+        return false;
+      }
 
+      if (!phone.trim()) {
+        alert('请输入手机号码');
+        return false;
+      }
+
+      // 手机号码格式验证
+      if (!/^1[3-9]\d{9}$/.test(phone)) {
+        alert('请输入正确的手机号码');
+        return false;
+      }
+
+      return true;
+    }
+
+    // 关闭模态框函数
+    function closeModal() {
+      const modal = document.getElementById('editModal');
+      const form = document.getElementById('editUserForm');
+
+      modal.style.display = 'none';
+      form.reset();
+    }
+
+
+    // 关闭按钮和点击外部区域关闭模态框
+    document.querySelector('.close').onclick = function() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.querySelector('.cancel-button').onclick = function() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('editModal');
+      if (event.target === modal) {
         modal.style.display = 'none';
-        form.reset();
       }
-
-
-      // 关闭按钮和点击外部区域关闭模态框
-      document.querySelector('.close').onclick = function() {
-        document.getElementById('editModal').style.display = 'none';
-      }
-
-      document.querySelector('.cancel-button').onclick = function() {
-        document.getElementById('editModal').style.display = 'none';
-      }
-
-      window.onclick = function(event) {
-        const modal = document.getElementById('editModal');
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      }
+    }
 
   </script>
 </div>
