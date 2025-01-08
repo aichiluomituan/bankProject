@@ -51,12 +51,11 @@ public interface AdTransactionMapper {
     /**
      *  模糊查询--通过付款方或收款方姓名查询数据
      */
-    List<AdTransactionQuery> selectLikeData(@Param("selectName") String selectName,
-                                            @Param("pageNo") Integer pageNo,
-                                            @Param("pageSize") Integer pageSize);
+    List<AdTransactionQuery> selectLikeData(AdFuzzyQuery adFuzzyQuery);
 
     /**
      *  模糊查询--通过用户名查询到数据总数
      */
     int selectLikeDataCount(AdFuzzyQuery adFuzzyQuery);
+
 }
