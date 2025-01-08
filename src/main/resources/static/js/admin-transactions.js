@@ -365,6 +365,7 @@ function FuzzyQueriesAd(){
             return;
         }
 
+
         // 清空现有数据，但保留表头
         tbody.innerHTML = `
             <tr>

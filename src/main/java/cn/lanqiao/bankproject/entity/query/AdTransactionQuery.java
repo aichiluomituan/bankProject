@@ -22,6 +22,7 @@ public class AdTransactionQuery {
     private String payer; // 付款方
     private String payee; // 收款方
 
+
     private String payerBankCard; // 付款方卡号
     private String payeeBankCard; // 收款方卡号
 }

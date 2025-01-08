@@ -12,6 +12,7 @@
         <result property="payer" column="payer"/>
         <result property="payee" column="payee"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         id,date,tradeType
         tradeState,money

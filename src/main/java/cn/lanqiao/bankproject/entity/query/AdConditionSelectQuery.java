@@ -24,4 +24,5 @@ public class AdConditionSelectQuery {
     private Integer offset; //起始索引
 
     private String selectName; //模糊查询数据
+
 }

@@ -13,6 +13,7 @@ public class AdFuzzyQuery {
 
     private String selectName; //模糊查询数据
 
+
     //接收页码信息
     private Integer pageNo; //当前页
     private final Integer pageSize = 4; //每页大小

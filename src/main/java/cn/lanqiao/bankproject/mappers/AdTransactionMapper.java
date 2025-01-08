@@ -57,4 +57,5 @@ public interface AdTransactionMapper {
      *  模糊查询--通过用户名查询到数据总数
      */
     int selectLikeDataCount(AdFuzzyQuery adFuzzyQuery);
+
 }
