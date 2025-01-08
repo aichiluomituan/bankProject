@@ -47,6 +47,10 @@ function ADISBTN(){
             const tr = document.createElement('tr');
             tr.innerHTML = '<td colspan="8" style="text-align: center;">暂无交易数据</td>';
             tbody.appendChild(tr);
+            //渲染页码
+            document.getElementById("currentPageAD").textContent = 1; //当前页
+            document.getElementById("totalPagesAD").textContent = 1; //总页数
+            document.getElementById('jumpInput').max = 1;
             return;
         }
 
@@ -299,6 +303,10 @@ function conditionSelectAd() {
                 const tr = document.createElement('tr');
                 tr.innerHTML = '<td colspan="8" style="text-align: center;">暂无符合条件的交易数据</td>';
                 tbody.appendChild(tr);
+                //渲染页码
+                document.getElementById("currentPageAD").textContent = 1; //当前页
+                document.getElementById("totalPagesAD").textContent = 1; //总页数
+                document.getElementById('jumpInput').max = 1;
                 return;
             }
 
@@ -339,7 +347,7 @@ function conditionSelectAd() {
 /**
  *  模糊查询--搜索交易记录(通过收款方或者付款方姓名)
  */
-document.getElementById("selectLikeBtn").addEventListener("click",FuzzyQueriesAd);
+document.getElementById("selectLikeBtn").addEventListener("click",conditionSelectAd);
 
 function FuzzyQueriesAd(){
     //获取用户输入的值
@@ -379,6 +387,10 @@ function FuzzyQueriesAd(){
             const tr = document.createElement('tr');
             tr.innerHTML = '<td colspan="8" style="text-align: center;">暂无符合条件的交易数据</td>';
             tbody.appendChild(tr);
+            //渲染页码
+            document.getElementById("currentPageAD").textContent = 1; //当前页
+            document.getElementById("totalPagesAD").textContent = 1; //总页数
+            document.getElementById('jumpInput').max = 1;
             return;
         }
 

@@ -34,15 +34,14 @@ public class AdTransactionServiceImpl implements AdTransactionService {
     public PaginationResultVO selectATS() {
         //规定每页的显示的总个数为4
         int pageSize = 4;
-        //当前页为1
-        int pageNo = 1;
-        //获取到查询的起始索引
-        int offset = (pageNo-1) * pageSize;
         //查询数据的总数
         int totalCount = adTransactionMapper.countATS();
         //通过数据总数和每页个数去得到页码等信息
         int pageTotal = (int) Math.ceil((double) totalCount / pageSize);
-
+        //当前页为1
+        int pageNo = 1;
+        //获取到查询的起始索引
+        int offset = (pageNo-1) * pageSize;
         //从trade表内查询到数据,将offset和pageSize传入到sql中
         List<AdTransactionQuery> adTransactionQueries = adTransactionMapper.selectATS(offset, pageSize);
         if (!adTransactionQueries.isEmpty()){
@@ -104,14 +103,19 @@ public class AdTransactionServiceImpl implements AdTransactionService {
     public PaginationResultVO conditionSelect(AdConditionSelectQuery adConditionSelectQuery) {
         //通过当前页和每页大小获取起始索引,先默认当前页为1
         // adConditionSelectQuery.setPageNo(1);
+        //查询数据的总数,这里不能调用countATS。需要查询特定条件查询到的数据条数
+        int totalCount = adTransactionMapper.countCondition(adConditionSelectQuery);
+        //通过数据总数和每页个数去得到页码等信息,总页数
+        int pageTotal = (int) Math.ceil((double) totalCount / adConditionSelectQuery.getPageSize());
+        //做一个判断：当总页数小于当前页的时候。设定当前页为1 避免起始索引超出数据实际长度
+        if (pageTotal<adConditionSelectQuery.getPageNo()){
+            //设定当前页为1
+            adConditionSelectQuery.setPageNo(1);
+        }
         int offset = (adConditionSelectQuery.getPageNo() - 1) * adConditionSelectQuery.getPageSize();
         adConditionSelectQuery.setOffset(offset);
         System.out.println(adConditionSelectQuery);
-        //查询数据的总数,这里不能调用countATS。需要查询特定条件查询到的数据条数
-        int totalCount = adTransactionMapper.countCondition(adConditionSelectQuery);
-        //通过数据总数和每页个数去得到页码等信息
-        int pageTotal = (int) Math.ceil((double) totalCount / adConditionSelectQuery.getPageSize());
-        // System.out.println(adConditionSelectQuery);
+        System.out.println("conditionSelect查询前面"+adConditionSelectQuery);
         List<AdTransactionQuery> ACSQ = adTransactionMapper.conditionSelect(adConditionSelectQuery);
         // System.out.println(ACSQ);
         if (!ACSQ.isEmpty()){
@@ -138,16 +142,21 @@ public class AdTransactionServiceImpl implements AdTransactionService {
 
     @Override
     public PaginationResultVO selectLikeData(AdFuzzyQuery adFuzzyQuery) {
-        //通过当前页码获取到起始索引
-        int offset = (adFuzzyQuery.getPageNo() - 1) * adFuzzyQuery.getPageSize();
-        adFuzzyQuery.setOffset(offset);
-        System.out.println(adFuzzyQuery);
         //获取到符合条件的数据总数
         int totalCount = adTransactionMapper.selectLikeDataCount(adFuzzyQuery);
         //获取到总页码数
         int pageTotal = (int) Math.ceil((double) totalCount / adFuzzyQuery.getPageSize());
+        //做一个判断：当总页数小于当前页的时候。设定当前页为1 避免起始索引超出数据实际长度
+        if (pageTotal<adFuzzyQuery.getPageNo()){
+            //设定当前页为1
+            adFuzzyQuery.setPageNo(1);
+        }
+        //通过当前页码获取到起始索引
+        int offset = (adFuzzyQuery.getPageNo() - 1) * adFuzzyQuery.getPageSize();
+        adFuzzyQuery.setOffset(offset);
+        System.out.println(adFuzzyQuery);
         //通过查询到的payee查询卡号
-        List<AdTransactionQuery> ADTQ = adTransactionMapper.selectLikeData(adFuzzyQuery.getSelectName(),adFuzzyQuery.getPageNo(),adFuzzyQuery.getPageSize());
+        List<AdTransactionQuery> ADTQ = adTransactionMapper.selectLikeData(adFuzzyQuery);
         if (!ADTQ.isEmpty()){
             for (AdTransactionQuery adtq : ADTQ) {
                 adtq.setPayeeBankCard(userService.privacyTreatment(userMapper.selectBankCardAd(adtq.getPayee())));
