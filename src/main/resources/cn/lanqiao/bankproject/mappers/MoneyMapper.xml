@@ -15,4 +15,5 @@
         Insert into trade  values (null,now(),'',#{bankCard},#{bankBalance},'处理中','账户取款','取款',#{payer})
     </insert>
 
+
 </mapper>
