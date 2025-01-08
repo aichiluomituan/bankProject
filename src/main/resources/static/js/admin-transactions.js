@@ -250,6 +250,13 @@ function conditionSelectAd() {
     //将日期转换成Date对象
     let start = new Date(preTime);
     let end = new Date(endTime);
+    //将money转换成int类型
+    if (minMoney===''&&maxMoney==''){
+        minMoney = '0';
+        maxMoney = '0';
+    }
+    let MinMoney = parseInt(minMoney);
+    let MaxMoney = parseInt(maxMoney);
     console.log("s:"+start)
     console.log("ed:"+end)
     console.log("p:"+preTime)
@@ -258,7 +265,7 @@ function conditionSelectAd() {
     console.log("selectLikeInput:"+document.getElementById("selectLikeInput").value)
     // if (maxPages)
     //如果用户输入的起始时间在终止日期之前并且最大金额大于最小金额 就允许发送请求
-    if ((start <= end && minMoney <= maxMoney) || (preTime == '' && endTime == '' && minMoney <= maxMoney)){
+    if ((start <= end) && (MinMoney <= MaxMoney) || (preTime === '' && endTime === '' && MinMoney <= MaxMoney)){
         //符合逻辑条件，允许发送请求
         axios({
             url: "http://localhost:8080/AdTransaction/conditionSelect",
