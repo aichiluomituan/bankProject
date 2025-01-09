@@ -58,8 +58,9 @@ private RegisterUserMapper registerUserMapper;
             throw new managementException(ResultCodeEnum.THE_PASSWORD_IS_DIFFERENT_FOR_THE_TWO_TIMES);
         }
         RegisterUser build = RegisterUser
-                    .builder()
-                .password(DigestUtils.md5DigestAsHex(registerDTO.password().getBytes()))
+                .builder()
+                // 移除 MD5 加密，直接使用原始密码
+                .password(registerDTO.password())
                 .build();
         BeanUtils.copyProperties(registerDTO, build, PRIVATE_PASSWORD_EXCLUDED);
         logger.info("添加到数据库");
